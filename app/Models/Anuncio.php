@@ -35,11 +35,14 @@ class Anuncio extends Model implements Auditable
 
     ];
 
+    
+
     public function reservas()
     {
         return $this->hasMany(Reserva::class);
     }
 
+    //anuncio pertence a um usuario
     public function user()
     {
     return $this->belongsTo(User::class);

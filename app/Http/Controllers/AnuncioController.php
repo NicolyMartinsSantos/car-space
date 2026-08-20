@@ -33,7 +33,7 @@ class AnuncioController extends Controller
 
     public function index()
     {
-        $data = Anuncio::all();
+        $data = Anuncio::where('user_id', auth()->id())->get();
 
         return view('anuncio.index', compact('data'));
     }
@@ -76,5 +76,12 @@ class AnuncioController extends Controller
         $anuncio->delete();
 
         return redirect('/anuncio');
+    }
+
+    public function show($id)
+    {
+    $anuncio = Anuncio::findOrFail($id);
+
+    return view('anuncio.show', compact('anuncio'));
     }
 }

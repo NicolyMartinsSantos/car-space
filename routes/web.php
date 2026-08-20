@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VeiculoController;
 use App\Http\Controllers\AnuncioController;
 use App\Http\Controllers\ReservaController;
+use App\Models\Anuncio;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,11 @@ use App\Http\Controllers\ReservaController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $data = Anuncio::all();
+
+    return view('welcome', compact('data'));
+
 });
 
 Route::get('/dashboard', function () {
@@ -39,6 +44,8 @@ Route::get('/anuncio', [AnuncioController::class, 'index']);
 Route::get('/anuncio/edit/{id}', [AnuncioController::class, 'edit']);
 Route::post('/anuncio/update/{id}', [AnuncioController::class, 'update']);
 Route::get('/anuncio/delete/{id}', [AnuncioController::class, 'delete']);
+Route::get('/anuncio/{id}', [AnuncioController::class, 'show'])
+    ->whereNumber('id');
 
 // RESERVA
 Route::get('/reserva', [ReservaController::class, 'index']);

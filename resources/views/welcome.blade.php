@@ -2,80 +2,120 @@
 
 <div class="container mt-4">
 
-    <div class="d-flex justify-content-end mb-4">
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm mb-5">
+    <div class="container">
 
-        @guest
-            <a href="/login" class="btn btn-outline-primary me-2">
-                Entrar
-            </a>
-
-            <a href="/register" class="btn btn-primary">
-                Cadastrar
-            </a>
-        @endguest
-
-        @auth
-
-            <span class="me-3 align-self-center">
-                Olá, <strong>{{ Auth::user()->name }}</strong>
-            </span>
-
-            <a href="/profile" class="btn btn-outline-secondary me-2">
-                Perfil
-            </a>
-
-            <form action="/logout" method="POST" class="d-inline">
-                @csrf
-                <button type="submit" class="btn btn-danger">
-                    Sair
-                </button>
-            </form>
-
-        @endauth
-
-    </div>
-
-    <div class="text-center">
-
-        <h1 class="display-3 fw-bold">
+        <a class="navbar-brand fw-bold text-primary fs-3" href="/">
             CAR SPACE
-        </h1>
-
-        <p class="lead mt-4">
-            Sistema de compartilhamento de vagas de garagem.
-        </p>
-
-        <p class="text-muted">
-            Cadastre seus veículos, anuncie sua vaga ou reserve uma garagem.
-        </p>
-
-        <div class="mt-5 d-flex flex-wrap justify-content-center gap-3">
-
-    @auth
-
-        <a href="/veiculo" class="btn btn-primary btn-lg me-3">
-            🚗 Meus veículos
         </a>
 
-        <a href="/anuncio" class="btn btn-success btn-lg me-3">
-            🏠 Meus Anúncios
-        </a>
+        <div class="ms-auto d-flex align-items-center">
 
-    @endauth
+            @guest
 
-    <a href="/anuncio" class="btn btn-warning btn-lg me-3">
-        🔎 Ver anúncios disponíveis
-    </a>
+                <a href="/login" class="btn btn-outline-primary me-2">
+                    Entrar
+                </a>
 
-    @auth
+                <a href="/register" class="btn btn-primary">
+                    Criar Conta
+                </a>
 
-        <a href="/reserva" class="btn btn-dark btn-lg">
-            📅 Minhas Reservas
-        </a>
+            @endguest
 
-    @endauth
+            @auth
+
+                <span class="me-3 text-secondary">
+                    Olá, <strong>{{ Auth::user()->name }}</strong>
+                </span>
+
+                <a href="/profile" class="btn btn-outline-primary me-2">
+                    Perfil
+                </a>
+
+                <form action="/logout" method="POST">
+                    @csrf
+
+                    <button class="btn btn-outline-danger">
+                        Sair
+                    </button>
+
+                </form>
+
+            @endauth
 
         </div>
+
+    </div>
+</nav>
+
+   
+
+    <hr class="my-5">
+
+    <h2 class="text-center mb-4">
+        Garagens Disponíveis
+    </h2>
+
+    <div class="row">
+
+        @forelse($data as $anuncio)
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card border-0 shadow rounded-4 h-100">
+
+                <div class="card-body">
+
+        <div class="bg-light rounded-3 d-flex justify-content-center align-items-center mb-3"
+             style="height:180px;">
+
+            <span class="text-secondary">
+                Foto da garagem
+            </span>
+
+        </div>
+
+        <h5 class="card-title">
+            {{ $anuncio->titulo }}
+        </h5>
+
+                        <p class="card-text">
+                            📍 {{ $anuncio->endereco }}
+                        </p>
+
+                        <p class="card-text">
+                            💰 R$ {{ $anuncio->preco }}
+                        </p>
+
+                        <p class="card-text">
+                            🚗 {{ $anuncio->quantidade_vagas }} vaga(s)
+                        </p>
+
+                        <a href="/anuncio/{{ $anuncio->id }}"
+                            class="btn btn-warning w-100">
+
+                            Ver anúncio
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        @empty
+
+            <div class="text-center">
+
+                <h5>
+                    Nenhum anúncio cadastrado.
+                </h5>
+
+            </div>
+
+        @endforelse
 
     </div>
 

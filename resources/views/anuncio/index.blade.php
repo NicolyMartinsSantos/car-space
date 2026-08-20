@@ -2,7 +2,7 @@
 
 <div class="container mt-5">
 
-<h1>Anúncios Cadastrados</h1>
+<h1>Meus Anúncios</h1>
 
 <a href="/anuncio/create" class="btn btn-success mb-3">
 

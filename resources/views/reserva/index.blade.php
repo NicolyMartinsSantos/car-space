@@ -4,13 +4,6 @@
 
 <h1>Reservas</h1>
 
-<a href="/reserva/create"
-
-class="btn btn-success mb-3">
-
-Nova Reserva
-
-</a>
 
 <a href="/"
 class="btn btn-dark">

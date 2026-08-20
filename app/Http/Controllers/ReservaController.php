@@ -12,7 +12,7 @@ class ReservaController extends Controller
 {
     public function create()
     {
-        $veiculos = Veiculo::all();
+        $veiculos = Veiculo::where('user_id', auth()->id())->get();
 
         $anuncios = Anuncio::all();
 
@@ -43,13 +43,13 @@ public function store(Request $request)
 
 
     public function index()
-    {
+{
 
-        $data = Reserva::all();
+    $data = Reserva::where('user_id', auth()->id())->get();
 
-        return view('reserva.index', compact('data'));
+    return view('reserva.index', compact('data'));
 
-    }
+}
 
 
     public function edit($id)

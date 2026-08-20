@@ -43,7 +43,7 @@ class VeiculoController extends Controller
     public function index()
     {
 
-        $data = Veiculo::all();
+        $data = Veiculo::where('user_id', auth()->id())->get();
 
         return view('veiculo.index', compact('data'));
 
