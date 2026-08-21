@@ -7,6 +7,9 @@ use App\Http\Controllers\VeiculoController;
 use App\Http\Controllers\AnuncioController;
 use App\Http\Controllers\ReservaController;
 use App\Models\Anuncio;
+use App\Http\Controllers\CepController;
+
+Route::get('/buscar-cep', [CepController::class, 'buscar']);
 
 /*
 |--------------------------------------------------------------------------

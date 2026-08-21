@@ -29,11 +29,16 @@
                     Olá, <strong>{{ Auth::user()->name }}</strong>
                 </span>
 
+                <!-- BOTÃO ADICIONADO AQUI -->
+                <a href="/anuncio/create" class="btn btn-success me-2">
+                    + Anunciar Vaga
+                </a>
+
                 <a href="/profile" class="btn btn-outline-primary me-2">
                     Perfil
                 </a>
 
-                <form action="/logout" method="POST">
+                <form action="/logout" method="POST" class="m-0">
                     @csrf
 
                     <button class="btn btn-outline-danger">
@@ -48,8 +53,6 @@
 
     </div>
 </nav>
-
-   
 
     <hr class="my-5">
 
