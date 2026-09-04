@@ -1,79 +1,77 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@extends('layouts.main')
 
-<div class="container mt-5">
+@section('content')
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold h2 mb-1 text-dark">Minhas Reservas</h1>
+            <p class="text-muted mb-0 small">Acompanhe suas solicitações e agendamentos de garagens</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="/" class="btn-car-secondary">
+                <i class="bi bi-house"></i> Início
+            </a>
+            <a href="/reserva/create" class="btn-car-primary">
+                <i class="bi bi-calendar-plus"></i> Nova Reserva
+            </a>
+        </div>
+    </div>
 
-<h1>Reservas</h1>
-
-
-<a href="/"
-class="btn btn-dark">
-
-🏠 Página Inicial
-
-</a>
-
-<table class="table table-bordered">
-
-<tr>
-
-<th>ID</th>
-
-<th>DATA</th>
-
-<th>HORÁRIO</th>
-
-<th>STATUS</th>
-
-<th>VEÍCULO</th>
-
-<th>ANÚNCIO</th>
-
-<th>AÇÕES</th>
-
-</tr>
-
-@foreach($data as $reserva)
-
-<tr>
-
-<td>{{ $reserva->id }}</td>
-
-<td>{{ $reserva->data }}</td>
-
-<td>{{ $reserva->horario }}</td>
-
-<td>{{ $reserva->status }}</td>
-
-<td>{{ $reserva->veiculo?->modelo ?? 'Veículo não encontrado' }}</td>
-
-<td>{{ $reserva->anuncio?->titulo ?? 'Anúncio não encontrado' }}</td>
-
-<td>
-
-<a href="/reserva/edit/{{ $reserva->id }}"
-
-class="btn btn-primary btn-sm">
-
-Editar
-
-</a>
-
-<br><br>
-
-<a href="/reserva/delete/{{ $reserva->id }}"
-
-class="btn btn-danger btn-sm">
-
-Excluir
-
-</a>
-
-</td>
-
-</tr>
-
-@endforeach
-
-</table>
-
+    @if(count($data) > 0)
+        <div class="car-table-container">
+            <table class="table car-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Status</th>
+                        <th>Veículo</th>
+                        <th>Anúncio / Garagem</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($data as $reserva)
+                        <tr>
+                            <td class="fw-bold text-muted">#{{ $reserva->id }}</td>
+                            <td class="fw-semibold text-dark"><i class="bi bi-calendar3 me-1 text-primary"></i> {{ date('d/m/Y', strtotime($reserva->data)) }}</td>
+                            <td><i class="bi bi-clock me-1 text-secondary"></i> {{ substr($reserva->horario, 0, 5) }}</td>
+                            <td>
+                                @if(strtolower($reserva->status) == 'confirmada' || strtolower($reserva->status) == 'aprovado')
+                                    <span class="car-badge car-badge-green"><i class="bi bi-check-circle-fill"></i> {{ $reserva->status }}</span>
+                                @elseif(strtolower($reserva->status) == 'cancelada')
+                                    <span class="car-badge car-badge-gray"><i class="bi bi-x-circle-fill"></i> {{ $reserva->status }}</span>
+                                @else
+                                    <span class="car-badge car-badge-amber"><i class="bi bi-hourglass-split"></i> {{ $reserva->status }}</span>
+                                @endif
+                            </td>
+                            <td><span class="fw-semibold text-dark"><i class="bi bi-car-front text-primary me-1"></i> {{ $reserva->veiculo?->modelo ?? 'Veículo não encontrado' }}</span></td>
+                            <td><span class="text-secondary"><i class="bi bi-p-square text-primary me-1"></i> {{ $reserva->anuncio?->titulo ?? 'Anúncio não encontrado' }}</span></td>
+                            <td class="text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="/reserva/edit/{{ $reserva->id }}" class="btn-car-outline-primary py-1 px-3">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                    <a href="/reserva/delete/{{ $reserva->id }}" class="btn-car-danger py-1 px-3" onclick="return confirm('Tem certeza que deseja cancelar/excluir esta reserva?')">
+                                        <i class="bi bi-trash"></i> Excluir
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @else
+        <div class="car-card p-5 text-center">
+            <i class="bi bi-calendar-check text-muted display-4 mb-3 d-block"></i>
+            <h4 class="fw-bold text-dark">Nenhuma reserva encontrada</h4>
+            <p class="text-secondary mb-4">Você ainda não solicitou reservas em nenhuma vaga de garagem.</p>
+            <a href="/reserva/create" class="btn-car-primary">
+                <i class="bi bi-calendar-plus"></i> Fazer uma Reserva
+            </a>
+        </div>
+    @endif
 </div>
+@endsection

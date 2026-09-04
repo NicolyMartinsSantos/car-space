@@ -1,135 +1,77 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@extends('layouts.main')
 
-<div class="container mt-5">
-
-    <h1>Cadastrar Anúncio</h1>
-
-    <form action="/anuncio/store" method="POST">
-
-        @csrf
-
-        <div class="mb-3">
-            <input type="text"
-                   name="titulo"
-                   placeholder="Título"
-                   class="form-control"
-                   required>
+@section('content')
+<div class="container" style="max-width: 800px;">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="fw-bold h2 mb-1 text-dark">Cadastrar Anúncio</h1>
+            <p class="text-muted mb-0 small">Preencha as informações para disponibilizar sua vaga</p>
         </div>
-
-        <div class="mb-3">
-            <textarea name="descricao"
-                      placeholder="Descrição"
-                      class="form-control"
-                      required></textarea>
-        </div>
-
-        <!-- CAMPO DE CEP -->
-        <div class="mb-3">
-            <input type="text"
-                   id="cep"
-                   name="cep"
-                   placeholder="CEP (digite para buscar o endereço)"
-                   class="form-control"
-                   maxlength="9"
-                   onblur="buscarCep()">
-        </div>
-
-        <div class="mb-3">
-            <input type="text"
-                   id="endereco"
-                   name="endereco"
-                   placeholder="Endereço (preenchido automaticamente)"
-                   class="form-control"
-                   required>
-        </div>
-
-        <div class="mb-3">
-            <input type="number"
-                   step="0.01"
-                   name="preco"
-                   placeholder="Preço"
-                   class="form-control"
-                   required>
-        </div>
-
-        <div class="mb-3">
-            <input type="text"
-                   name="telefone"
-                   placeholder="Telefone"
-                   class="form-control"
-                   required>
-        </div>
-
-        <div class="mb-3">
-            <input type="number"
-                   name="quantidade_vagas"
-                   placeholder="Quantidade de vagas"
-                   class="form-control"
-                   required>
-        </div>
-
-        <div class="mb-3">
-            <input type="text"
-                   name="categoria_vaga"
-                   placeholder="Categoria da vaga (Carro ou Moto)"
-                   class="form-control"
-                   required>
-        </div>
-
-        <div class="mb-3">
-            <label>Horário início</label>
-
-            <input type="time"
-                   name="horario_inicio"
-                   class="form-control"
-                   required>
-        </div>
-
-        <div class="mb-3">
-            <label>Horário fim</label>
-
-            <input type="time"
-                   name="horario_fim"
-                   class="form-control"
-                   required>
-        </div>
-
-        <button type="submit" class="btn btn-success">
-            Salvar
-        </button>
-
-        <a href="/" class="btn btn-secondary">
-            Voltar
+        <a href="/anuncio" class="btn-car-secondary">
+            <i class="bi bi-arrow-left"></i> Voltar
         </a>
+    </div>
 
-    </form>
+    <div class="car-card p-4 p-md-5">
+        <form action="/anuncio/store" method="POST">
+            @csrf
 
+            <div class="mb-4">
+                <label class="car-form-label"><i class="bi bi-fonts text-primary me-1"></i> Título do Anúncio</label>
+                <input type="text" name="titulo" placeholder="Ex: Vaga coberta no centro da cidade" class="form-control car-form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="car-form-label"><i class="bi bi-card-text text-primary me-1"></i> Descrição Detalhada</label>
+                <textarea name="descricao" rows="4" placeholder="Descreva os detalhes da sua vaga, facilidades de acesso, segurança, etc." class="form-control car-form-control" required></textarea>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-8">
+                    <label class="car-form-label"><i class="bi bi-geo-alt text-primary me-1"></i> Endereço Completo</label>
+                    <input type="text" name="endereco" placeholder="Rua, Número, Bairro - Cidade" class="form-control car-form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="car-form-label"><i class="bi bi-currency-dollar text-primary me-1"></i> Preço (R$)</label>
+                    <input type="number" step="0.01" name="preco" placeholder="0.00" class="form-control car-form-control" required>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label class="car-form-label"><i class="bi bi-telephone text-primary me-1"></i> Telefone / WhatsApp</label>
+                    <input type="text" name="telefone" placeholder="(00) 00000-0000" class="form-control car-form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="car-form-label"><i class="bi bi-car-front text-primary me-1"></i> Quantidade de Vagas</label>
+                    <input type="number" name="quantidade_vagas" placeholder="1" class="form-control car-form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="car-form-label"><i class="bi bi-tag text-primary me-1"></i> Categoria da Vaga</label>
+                    <input type="text" name="categoria_vaga" placeholder="Carro ou Moto" class="form-control car-form-control" required>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="car-form-label"><i class="bi bi-clock text-primary me-1"></i> Horário Início</label>
+                    <input type="time" name="horario_inicio" class="form-control car-form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="car-form-label"><i class="bi bi-clock-history text-primary me-1"></i> Horário Fim</label>
+                    <input type="time" name="horario_fim" class="form-control car-form-control" required>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                <a href="/anuncio" class="btn-car-secondary">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn-car-primary">
+                    <i class="bi bi-check-circle"></i> Salvar Anúncio
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
-
-<!-- SCRIPT DA CONSULTA DO VIACEP -->
-<script>
-function buscarCep() {
-    let cep = document.getElementById('cep').value.replace(/\D/g, '');
-
-    if (cep.length === 8) {
-        document.getElementById('endereco').value = "Buscando endereço...";
-
-        fetch(`/buscar-cep?cep=${cep}`)
-            .then(response => response.json())
-            .then(data => {
-                if (!data.erro) {
-                    let enderecoCompleto = `${data.logradouro || ''}, ${data.bairro || ''} - ${data.localidade || ''}/${data.uf || ''}`;
-                    document.getElementById('endereco').value = enderecoCompleto;
-                } else {
-                    alert('CEP não encontrado!');
-                    document.getElementById('endereco').value = "";
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Erro ao buscar o CEP.');
-                document.getElementById('endereco').value = "";
-            });
-    }
-}
-</script>
+@endsection

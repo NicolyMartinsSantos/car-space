@@ -1,98 +1,65 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@extends('layouts.main')
 
-<div class="container mt-5">
+@section('content')
+<div class="container" style="max-width: 700px;">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="fw-bold h2 mb-1 text-dark">Cadastrar Reserva</h1>
+            <p class="text-muted mb-0 small">Escolha a vaga e seu veículo para efetuar o agendamento</p>
+        </div>
+        <a href="/reserva" class="btn-car-secondary">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
 
-<h1>Cadastrar Reserva</h1>
+    <div class="car-card p-4 p-md-5">
+        <form action="/reserva/store" method="POST">
+            @csrf
 
-<form action="/reserva/store" method="POST">
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="car-form-label"><i class="bi bi-calendar3 text-primary me-1"></i> Data da Reserva</label>
+                    <input type="date" name="data" class="form-control car-form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="car-form-label"><i class="bi bi-clock text-primary me-1"></i> Horário</label>
+                    <input type="time" name="horario" class="form-control car-form-control" required>
+                </div>
+            </div>
 
-@csrf
+            <div class="mb-4">
+                <label class="car-form-label"><i class="bi bi-car-front text-primary me-1"></i> Selecione seu Veículo</label>
+                <select name="veiculo_id" class="form-select car-form-select" required>
+                    <option value="">Selecione o veículo...</option>
+                    @foreach($veiculos as $veiculo)
+                        <option value="{{ $veiculo->id }}">
+                            {{ $veiculo->modelo }} ({{ $veiculo->placa }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-<div class="mb-3">
+            <div class="mb-4">
+                <label class="car-form-label"><i class="bi bi-p-square text-primary me-1"></i> Selecione o Anúncio / Vaga</label>
+                <select name="anuncio_id" class="form-select car-form-select" required>
+                    <option value="">Selecione a garagem...</option>
+                    @foreach($anuncios as $anuncio)
+                        <option value="{{ $anuncio->id }}">
+                            {{ $anuncio->titulo }} — R$ {{ number_format((float)$anuncio->preco, 2, ',', '.') }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-<input type="date"
-
-name="data"
-
-class="form-control">
-
+            <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                <a href="/reserva" class="btn-car-secondary">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn-car-primary">
+                    <i class="bi bi-check-circle"></i> Confirmar Reserva
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
-
-<div class="mb-3">
-
-<input type="time"
-
-name="horario"
-
-class="form-control">
-
-</div>
-
-
-<div class="mb-3">
-
-<label class="form-label">
-
-Veículo
-
-</label>
-
-<select name="veiculo_id" class="form-control">
-
-@foreach($veiculos as $veiculo)
-
-<option value="{{ $veiculo->id }}">
-
-{{ $veiculo->modelo }}
-
-</option>
-
-@endforeach
-
-</select>
-
-</div>
-
-<div class="mb-3">
-
-<label class="form-label">
-
-Anúncio
-
-</label>
-
-<select name="anuncio_id" class="form-control">
-
-@foreach($anuncios as $anuncio)
-
-<option value="{{ $anuncio->id }}">
-
-{{ $anuncio->titulo }}
-
-</option>
-
-@endforeach
-
-</select>
-
-</div>
-
-<button type="submit"
-
-class="btn btn-success">
-
-Salvar
-
-</button>
-
-<a href="/reserva"
-
-class="btn btn-secondary">
-
-Voltar
-
-</a>
-
-</form>
-
-</div>
+@endsection
