@@ -8,9 +8,6 @@
             <p class="text-muted mb-0 small">Cadastre e gerencie seus carros e motos</p>
         </div>
         <div class="d-flex gap-2">
-            <a href="/" class="btn-car-secondary">
-                <i class="bi bi-house"></i> Início
-            </a>
             <a href="/veiculo/create" class="btn-car-primary">
                 <i class="bi bi-plus-lg"></i> Novo Veículo
             </a>

@@ -8,9 +8,6 @@
             <p class="text-muted mb-0 small">Gerencie suas vagas de garagem publicadas</p>
         </div>
         <div class="d-flex gap-2">
-            <a href="/" class="btn-car-secondary">
-                <i class="bi bi-house"></i> Início
-            </a>
             <a href="/anuncio/create" class="btn-car-primary">
                 <i class="bi bi-plus-lg"></i> Novo Anúncio
             </a>

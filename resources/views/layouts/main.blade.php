@@ -345,11 +345,6 @@
             <div class="collapse navbar-collapse mt-2 mt-lg-0" id="carNavbar">
                 <ul class="navbar-nav me-auto ms-lg-4 mb-2 mb-lg-0 gap-1">
                     <li class="nav-item">
-                        <a href="/" class="car-nav-link {{ request()->is('/') ? 'active' : '' }}">
-                            <i class="bi bi-house-door"></i> Início
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a href="/anuncio" class="car-nav-link {{ request()->is('anuncio*') ? 'active' : '' }}">
                             <i class="bi bi-mega-phone"></i> Anúncios
                         </a>

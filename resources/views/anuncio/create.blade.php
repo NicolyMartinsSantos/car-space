@@ -48,7 +48,11 @@
                 </div>
                 <div class="col-md-4">
                     <label class="car-form-label"><i class="bi bi-tag text-primary me-1"></i> Categoria da Vaga</label>
-                    <input type="text" name="categoria_vaga" placeholder="Carro ou Moto" class="form-control car-form-control" required>
+                    <select name="categoria_vaga" class="form-select car-form-select" required>
+                        <option value="">Selecione...</option>
+                        <option value="Carro">Carro</option>
+                        <option value="Moto">Moto</option>
+                    </select>
                 </div>
             </div>
 

@@ -48,7 +48,10 @@
                 </div>
                 <div class="col-md-4">
                     <label class="car-form-label"><i class="bi bi-tag text-primary me-1"></i> Categoria da Vaga</label>
-                    <input type="text" name="categoria_vaga" value="{{ $anuncio->categoria_vaga }}" class="form-control car-form-control" required>
+                    <select name="categoria_vaga" class="form-select car-form-select" required>
+                        <option value="Carro" {{ $anuncio->categoria_vaga == 'Carro' ? 'selected' : '' }}>Carro</option>
+                        <option value="Moto" {{ $anuncio->categoria_vaga == 'Moto' ? 'selected' : '' }}>Moto</option>
+                    </select>
                 </div>
             </div>
 
