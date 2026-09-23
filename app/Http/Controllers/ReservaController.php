@@ -14,14 +14,20 @@ class ReservaController extends Controller
     {
         $veiculos = Veiculo::where('user_id', auth()->id())->get();
 
-        $anuncios = Anuncio::all();
+        $anuncios = Anuncio::where('user_id', '!=', auth()->id())->get();
 
-    return view('reserva.create', compact('veiculos', 'anuncios'));
-}
+        return view('reserva.create', compact('veiculos', 'anuncios'));
+    }
 
 
 public function store(Request $request)
 {
+    $anuncio = Anuncio::find($request->anuncio_id);
+
+    if ($anuncio && $anuncio->user_id == auth()->id()) {
+        return back()->withErrors(['anuncio_id' => 'Você não pode reservar a sua própria vaga.']);
+    }
+
     $reserva = new Reserva();
 
     $reserva->data = $request->data;

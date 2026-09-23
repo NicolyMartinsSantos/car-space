@@ -49,6 +49,9 @@
                         </option>
                     @endforeach
                 </select>
+                @error('anuncio_id')
+                    <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="d-flex justify-content-end gap-2 pt-3 border-top">

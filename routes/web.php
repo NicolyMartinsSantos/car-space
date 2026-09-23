@@ -19,7 +19,11 @@ Route::get('/buscar-cep', [CepController::class, 'buscar']);
 
 Route::get('/', function () {
 
-    $data = Anuncio::all();
+    if (auth()->check()) {
+        $data = Anuncio::where('user_id', '!=', auth()->id())->get();
+    } else {
+        $data = Anuncio::all();
+    }
 
     return view('welcome', compact('data'));
 
