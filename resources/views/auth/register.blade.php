@@ -10,28 +10,64 @@
         <!-- Name -->
         <div class="mb-3">
             <label for="name" class="car-form-label"><i class="bi bi-person text-primary me-1"></i> Nome Completo</label>
-            <input id="name" class="form-control car-form-control" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Seu nome" />
+            <input id="name" class="form-control car-form-control" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" placeholder="Seu nome" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mb-3">
             <label for="email" class="car-form-label"><i class="bi bi-envelope text-primary me-1"></i> E-mail</label>
-            <input id="email" class="form-control car-form-control" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="seu@email.com" />
+            <input id="email" class="form-control car-form-control" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="seu@email.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mb-3">
             <label for="password" class="car-form-label"><i class="bi bi-lock text-primary me-1"></i> Senha</label>
-            <input id="password" class="form-control car-form-control" type="password" name="password" required autocomplete="new-password" placeholder="Mínimo 8 caracteres" />
+            <div class="position-relative" x-data="{ show: false }">
+                <input id="password" 
+                       class="form-control car-form-control pe-5" 
+                       type="password" 
+                       :type="show ? 'text' : 'password'" 
+                       name="password" 
+                       required 
+                       autocomplete="new-password" 
+                       placeholder="Mínimo 8 caracteres" />
+                <button type="button" 
+                        @click="show = !show" 
+                        class="btn border-0 text-secondary position-absolute top-50 end-0 translate-middle-y me-2 p-1 bg-transparent shadow-none" 
+                        :aria-label="show ? 'Ocultar senha' : 'Exibir senha'" 
+                        :title="show ? 'Ocultar senha' : 'Exibir senha'">
+                    <i class="bi fs-5" :class="show ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+            </div>
+            <div class="form-text text-muted small mt-1">
+                <i class="bi bi-info-circle me-1"></i>
+                Dica: evite senhas fáceis de adivinhar e não reutilize senhas de outros sites.
+            </div>
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mb-4">
             <label for="password_confirmation" class="car-form-label"><i class="bi bi-shield-check text-primary me-1"></i> Confirmar Senha</label>
-            <input id="password_confirmation" class="form-control car-form-control" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Repita a senha" />
+            <div class="position-relative" x-data="{ show: false }">
+                <input id="password_confirmation" 
+                       class="form-control car-form-control pe-5" 
+                       type="password" 
+                       :type="show ? 'text' : 'password'" 
+                       name="password_confirmation" 
+                       required 
+                       autocomplete="new-password" 
+                       placeholder="Repita a senha" />
+                <button type="button" 
+                        @click="show = !show" 
+                        class="btn border-0 text-secondary position-absolute top-50 end-0 translate-middle-y me-2 p-1 bg-transparent shadow-none" 
+                        :aria-label="show ? 'Ocultar senha' : 'Exibir senha'" 
+                        :title="show ? 'Ocultar senha' : 'Exibir senha'">
+                    <i class="bi fs-5" :class="show ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+            </div>
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
