@@ -86,9 +86,15 @@
                 @endguest
 
                 @auth
-                    <a href="/reserva/create" class="btn-car-primary w-100 py-3 text-decoration-none">
-                        <i class="bi bi-calendar-check"></i> Solicitar Reserva
-                    </a>
+                    @if($anuncio->user_id == auth()->id())
+                        <div class="alert alert-light text-muted border small mb-0 text-center">
+                            <i class="bi bi-info-circle me-1"></i> Este anúncio pertence a você.
+                        </div>
+                    @else
+                        <a href="/reserva/create?anuncio_id={{ $anuncio->id }}" class="btn-car-primary w-100 py-3 text-decoration-none">
+                            <i class="bi bi-calendar-check"></i> Solicitar Reserva
+                        </a>
+                    @endif
                 @endauth
 
                 <div class="mt-3 text-center">

@@ -10,42 +10,65 @@ use App\Models\Anuncio;
 
 class ReservaController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
+        $anuncioId = $request->query('anuncio_id', old('anuncio_id'));
+
+        if (!$anuncioId) {
+            return redirect('/')->with('error', 'Por favor, selecione uma garagem para solicitar a reserva.');
+        }
+
+        $anuncio = Anuncio::find($anuncioId);
+
+        if (!$anuncio) {
+            return redirect('/')->with('error', 'A garagem selecionada não foi encontrada.');
+        }
+
+        if ($anuncio->user_id == auth()->id()) {
+            return redirect('/')->with('error', 'Você não pode solicitar reserva na sua própria vaga de garagem.');
+        }
+
         $veiculos = Veiculo::where('user_id', auth()->id())->get();
 
-        $anuncios = Anuncio::where('user_id', '!=', auth()->id())->get();
-
-        return view('reserva.create', compact('veiculos', 'anuncios'));
+        return view('reserva.create', compact('veiculos', 'anuncio'));
     }
 
+    public function store(Request $request)
+    {
+        $anuncio = Anuncio::find($request->anuncio_id);
 
-public function store(Request $request)
-{
-    $anuncio = Anuncio::find($request->anuncio_id);
+        if (!$anuncio) {
+            return redirect('/')->with('error', 'A garagem selecionada não foi encontrada.');
+        }
 
-    if ($anuncio && $anuncio->user_id == auth()->id()) {
-        return back()->withErrors(['anuncio_id' => 'Você não pode reservar a sua própria vaga.']);
+        if ($anuncio->user_id == auth()->id()) {
+            return back()->withErrors(['anuncio_id' => 'Você não pode reservar a sua própria vaga.'])->withInput();
+        }
+
+        $veiculo = Veiculo::find($request->veiculo_id);
+
+        if (!$veiculo || $veiculo->user_id != auth()->id()) {
+            return back()->withErrors(['veiculo_id' => 'Por favor, selecione um veículo válido cadastrado em sua conta.'])->withInput();
+        }
+
+        $reserva = new Reserva();
+
+        $reserva->data = $request->data;
+
+        $reserva->horario = $request->horario;
+
+        $reserva->status = 'Pendente';
+
+        $reserva->veiculo_id = $request->veiculo_id;
+
+        $reserva->anuncio_id = $request->anuncio_id;
+
+        $reserva->user_id = auth()->id();
+
+        $reserva->save();
+
+        return redirect('/reserva')->with('success', 'Solicitação de reserva enviada com sucesso!');
     }
-
-    $reserva = new Reserva();
-
-    $reserva->data = $request->data;
-
-    $reserva->horario = $request->horario;
-
-    $reserva->status = 'Pendente';
-
-    $reserva->veiculo_id = $request->veiculo_id;
-
-    $reserva->anuncio_id = $request->anuncio_id;
-
-    $reserva->user_id = auth()->id();
-
-    $reserva->save();
-
-    return redirect('/reserva');
-}
 
 
     public function index()
@@ -77,16 +100,13 @@ public function store(Request $request)
 
     public function update(Request $request, $id)
     {
+        $reserva = Reserva::findOrFail($id);
 
-        $reserva = Reserva::find($id);
-
-        $this->authorize('delete', $reserva);
+        $this->authorize('update', $reserva);
 
         $reserva->data = $request->data;
 
         $reserva->horario = $request->horario;
-
-        $reserva->status = $request->status;
 
         $reserva->veiculo_id = $request->veiculo_id;
 
@@ -95,7 +115,54 @@ public function store(Request $request)
         $reserva->save();
 
         return redirect('/reserva');
+    }
 
+    public function aceitar($id)
+    {
+        $reserva = Reserva::findOrFail($id);
+
+        $this->authorize('responderSolicitacao', $reserva);
+
+        if ($reserva->status !== 'Pendente') {
+            return redirect()->back()->with('error', 'Esta solicitação já foi respondida anteriormente.');
+        }
+
+        $reserva->status = 'Confirmada';
+        $reserva->save();
+
+        return redirect()->back()->with('success', 'Solicitação de reserva aceita com sucesso!');
+    }
+
+    public function recusar($id)
+    {
+        $reserva = Reserva::findOrFail($id);
+
+        $this->authorize('responderSolicitacao', $reserva);
+
+        if ($reserva->status !== 'Pendente') {
+            return redirect()->back()->with('error', 'Esta solicitação já foi respondida anteriormente.');
+        }
+
+        $reserva->status = 'Recusada';
+        $reserva->save();
+
+        return redirect()->back()->with('success', 'Solicitação de reserva recusada.');
+    }
+
+    public function cancelar($id)
+    {
+        $reserva = Reserva::findOrFail($id);
+
+        $this->authorize('delete', $reserva);
+
+        if (!in_array($reserva->status, ['Pendente', 'Confirmada'])) {
+            return redirect()->back()->with('error', 'Esta reserva não pode ser cancelada pois já foi finalizada.');
+        }
+
+        $reserva->status = 'Cancelada';
+        $reserva->save();
+
+        return redirect()->back()->with('success', 'Reserva cancelada com sucesso.');
     }
 
 

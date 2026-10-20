@@ -33,7 +33,9 @@ class AnuncioController extends Controller
 
     public function index()
     {
-        $data = Anuncio::where('user_id', auth()->id())->get();
+        $data = Anuncio::where('user_id', auth()->id())
+            ->with(['reservas.veiculo', 'reservas.user'])
+            ->get();
 
         return view('anuncio.index', compact('data'));
     }

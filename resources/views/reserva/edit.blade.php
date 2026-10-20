@@ -29,11 +29,18 @@
 
             <div class="mb-4">
                 <label class="car-form-label"><i class="bi bi-info-circle text-primary me-1"></i> Status da Reserva</label>
-                <select name="status" class="form-select car-form-select" required>
-                    <option value="Pendente" {{ $reserva->status == 'Pendente' ? 'selected' : '' }}>Pendente</option>
-                    <option value="Confirmada" {{ $reserva->status == 'Confirmada' ? 'selected' : '' }}>Confirmada</option>
-                    <option value="Cancelada" {{ $reserva->status == 'Cancelada' ? 'selected' : '' }}>Cancelada</option>
-                </select>
+                <div class="d-flex align-items-center gap-2 pt-1">
+                    @if(strtolower($reserva->status) == 'confirmada' || strtolower($reserva->status) == 'aprovado')
+                        <span class="car-badge car-badge-green"><i class="bi bi-check-circle-fill"></i> {{ $reserva->status }}</span>
+                    @elseif(strtolower($reserva->status) == 'recusada')
+                        <span class="car-badge" style="background-color: #fee2e2; color: #991b1b;"><i class="bi bi-x-circle-fill"></i> {{ $reserva->status }}</span>
+                    @elseif(strtolower($reserva->status) == 'cancelada')
+                        <span class="car-badge car-badge-gray"><i class="bi bi-x-circle-fill"></i> {{ $reserva->status }}</span>
+                    @else
+                        <span class="car-badge car-badge-amber"><i class="bi bi-hourglass-split"></i> {{ $reserva->status }}</span>
+                    @endif
+                    <small class="text-muted fst-italic ms-2">O status é controlado pelo proprietário da vaga.</small>
+                </div>
             </div>
 
             <div class="mb-4">

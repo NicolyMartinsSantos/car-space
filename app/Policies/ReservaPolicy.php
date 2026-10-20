@@ -37,7 +37,17 @@ class ReservaPolicy
     return $user->id === $reserva->user_id;
     }
 
-   
+    public function responderSolicitacao(User $user, Reserva $reserva): bool
+    {
+        $anuncio = $reserva->anuncio;
+
+        if (!$anuncio || !$anuncio->user_id) {
+            return false;
+        }
+
+        return $user->id === $anuncio->user_id && $user->id !== $reserva->user_id;
+    }
+
     public function restore(User $user, Reserva $reserva): bool
     {
         return false;

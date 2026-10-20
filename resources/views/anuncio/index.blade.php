@@ -14,6 +14,19 @@
         </div>
     </div>
 
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show small mb-3" role="alert">
+            <i class="bi bi-check-circle-fill me-1"></i> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show small mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     @if(count($data) > 0)
         <div class="car-table-container">
             <table class="table car-table">
@@ -60,6 +73,99 @@
                                         </a>
                                     @endif
                                 @endauth
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" class="bg-light p-3 border-bottom">
+                                <div class="px-2">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-inbox text-primary"></i>
+                                        <span class="fw-semibold text-dark small">Solicitações de Reserva:</span>
+                                        @if($anuncio->reservas->count() > 0)
+                                            <span class="badge bg-secondary small">{{ $anuncio->reservas->count() }}</span>
+                                        @endif
+                                    </div>
+
+                                    @if($anuncio->reservas->count() > 0)
+                                        <div class="table-responsive bg-white rounded-3 border">
+                                            <table class="table table-sm align-middle mb-0 small">
+                                                <thead class="table-light text-muted">
+                                                    <tr>
+                                                        <th>Motorista</th>
+                                                        <th>Veículo</th>
+                                                        <th>Placa</th>
+                                                        <th>Data</th>
+                                                        <th>Horário</th>
+                                                        <th>Status</th>
+                                                        <th class="text-end">Ações</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($anuncio->reservas as $reserva)
+                                                        <tr>
+                                                            <td class="fw-semibold text-dark">
+                                                                <i class="bi bi-person-circle text-secondary me-1"></i>
+                                                                {{ $reserva->user?->name ?? 'Motorista não informado' }}
+                                                            </td>
+                                                            <td>
+                                                                <i class="bi bi-car-front text-secondary me-1"></i>
+                                                                {{ $reserva->veiculo?->modelo ?? 'Veículo não informado' }}
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge bg-light text-dark border">
+                                                                    {{ $reserva->veiculo?->placa ?? '-' }}
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <i class="bi bi-calendar3 text-secondary me-1"></i>
+                                                                {{ $reserva->data ? date('d/m/Y', strtotime($reserva->data)) : '-' }}
+                                                            </td>
+                                                            <td>
+                                                                <i class="bi bi-clock text-secondary me-1"></i>
+                                                                {{ $reserva->horario ? substr($reserva->horario, 0, 5) : '-' }}
+                                                            </td>
+                                                            <td>
+                                                                @if(strtolower($reserva->status) == 'confirmada' || strtolower($reserva->status) == 'aprovado')
+                                                                    <span class="car-badge car-badge-green"><i class="bi bi-check-circle-fill"></i> {{ $reserva->status }}</span>
+                                                                @elseif(strtolower($reserva->status) == 'recusada')
+                                                                    <span class="car-badge" style="background-color: #fee2e2; color: #991b1b;"><i class="bi bi-x-circle-fill"></i> {{ $reserva->status }}</span>
+                                                                @elseif(strtolower($reserva->status) == 'cancelada')
+                                                                    <span class="car-badge car-badge-gray"><i class="bi bi-x-circle-fill"></i> {{ $reserva->status }}</span>
+                                                                @else
+                                                                    <span class="car-badge car-badge-amber"><i class="bi bi-hourglass-split"></i> {{ $reserva->status }}</span>
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-end">
+                                                                @if(strtolower($reserva->status) == 'pendente')
+                                                                    <div class="d-inline-flex gap-1">
+                                                                        <form action="/reserva/{{ $reserva->id }}/aceitar" method="POST" class="d-inline m-0">
+                                                                            @csrf
+                                                                            <button type="submit" class="btn btn-sm btn-success py-1 px-2 fw-semibold" style="font-size: 0.75rem;" title="Aceitar reserva">
+                                                                                <i class="bi bi-check-lg"></i> Aceitar
+                                                                            </button>
+                                                                        </form>
+                                                                        <form action="/reserva/{{ $reserva->id }}/recusar" method="POST" class="d-inline m-0" onsubmit="return confirm('Tem certeza que deseja recusar esta solicitação?')">
+                                                                            @csrf
+                                                                            <button type="submit" class="btn btn-sm btn-outline-danger py-1 px-2 fw-semibold" style="font-size: 0.75rem;" title="Recusar reserva">
+                                                                                <i class="bi bi-x-lg"></i> Recusar
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
+                                                                @else
+                                                                    <span class="text-muted small">—</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    @else
+                                        <p class="text-muted small mb-0 fst-italic">
+                                            <i class="bi bi-info-circle me-1"></i> Nenhuma solicitação de reserva para este anúncio.
+                                        </p>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach

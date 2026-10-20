@@ -13,7 +13,7 @@
         <!-- Email Address -->
         <div class="mb-3">
             <label for="email" class="car-form-label"><i class="bi bi-envelope text-primary me-1"></i> E-mail</label>
-            <input id="email" class="form-control car-form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="seu@email.com" />
+            <input id="email" class="form-control car-form-control" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="seu@email.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 

@@ -86,6 +86,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/reserva/create', [ReservaController::class, 'create']);
     Route::post('/reserva/store', [ReservaController::class, 'store']);
 
+    // Responder Reserva (Aceitar / Recusar)
+    Route::post('/reserva/{id}/aceitar', [ReservaController::class, 'aceitar'])->name('reserva.aceitar');
+    Route::post('/reserva/{id}/recusar', [ReservaController::class, 'recusar'])->name('reserva.recusar');
+
+    // Cancelar Reserva (pelo Solicitante)
+    Route::post('/reserva/{id}/cancelar', [ReservaController::class, 'cancelar'])->name('reserva.cancelar');
+
 });
 
 

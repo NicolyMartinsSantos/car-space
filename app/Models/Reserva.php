@@ -31,4 +31,8 @@ class Reserva extends Model
         return $this->belongsTo(Anuncio::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
