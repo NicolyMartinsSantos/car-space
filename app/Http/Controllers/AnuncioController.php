@@ -22,6 +22,15 @@ class AnuncioController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'dias_disponiveis'   => ['required', 'array', 'min:1'],
+            'dias_disponiveis.*' => ['in:seg,ter,qua,qui,sex,sab,dom'],
+        ], [
+            'dias_disponiveis.required' => 'Selecione ao menos um dia da semana disponível.',
+            'dias_disponiveis.min'      => 'Selecione ao menos um dia da semana disponível.',
+            'dias_disponiveis.*.in'     => 'O dia da semana selecionado é inválido.',
+        ]);
+
         $dados = $request->all();
 
         $dados['user_id'] = auth()->id();
@@ -53,6 +62,15 @@ class AnuncioController extends Controller
     {
         $anuncio = Anuncio::find($id);
 
+        $request->validate([
+            'dias_disponiveis'   => ['required', 'array', 'min:1'],
+            'dias_disponiveis.*' => ['in:seg,ter,qua,qui,sex,sab,dom'],
+        ], [
+            'dias_disponiveis.required' => 'Selecione ao menos um dia da semana disponível.',
+            'dias_disponiveis.min'      => 'Selecione ao menos um dia da semana disponível.',
+            'dias_disponiveis.*.in'     => 'O dia da semana selecionado é inválido.',
+        ]);
+
         $anuncio->titulo = $request->titulo;
         $anuncio->descricao = $request->descricao;
         $anuncio->endereco = $request->endereco;
@@ -62,6 +80,7 @@ class AnuncioController extends Controller
         $anuncio->categoria_vaga = $request->categoria_vaga;
         $anuncio->horario_inicio = $request->horario_inicio;
         $anuncio->horario_fim = $request->horario_fim;
+        $anuncio->dias_disponiveis = $request->dias_disponiveis;
         $anuncio->user_id = auth()->id();
 
         $anuncio->save();

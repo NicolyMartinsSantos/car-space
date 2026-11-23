@@ -60,6 +60,47 @@
                         </div>
                     </div>
                 </div>
+
+                @php
+                    $diasSemana = [
+                        'seg' => 'Seg',
+                        'ter' => 'Ter',
+                        'qua' => 'Qua',
+                        'qui' => 'Qui',
+                        'sex' => 'Sex',
+                        'sab' => 'Sáb',
+                        'dom' => 'Dom',
+                    ];
+                    $diasAtivos = (array)($anuncio->dias_disponiveis ?? []);
+                @endphp
+
+                <!-- Dias Disponíveis -->
+                <div class="mt-3 p-3 bg-light rounded-3">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                        <span class="fw-bold text-dark small">
+                            <i class="bi bi-calendar-week-fill text-primary me-1"></i> Dias Disponíveis
+                        </span>
+                        <span class="text-muted small">
+                            Atendimento semanal da garagem
+                        </span>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 pt-1">
+                        @foreach($diasSemana as $chave => $sigla)
+                            @if(in_array($chave, $diasAtivos))
+                                <span class="badge rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center gap-1 shadow-sm"
+                                      style="background-color: var(--car-blue-100, #e0f2fe); color: var(--car-blue-800, #075985); border: 1px solid #bae6fd;">
+                                    <i class="bi bi-check-circle-fill text-primary"></i> {{ $sigla }}
+                                </span>
+                            @else
+                                <span class="badge rounded-pill px-3 py-2 fw-normal d-inline-flex align-items-center gap-1 bg-white border text-secondary opacity-50"
+                                      style="text-decoration: line-through;">
+                                    <i class="bi bi-x-circle"></i> {{ $sigla }}
+                                </span>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -73,9 +114,27 @@
                         <span class="text-secondary small">Contato:</span>
                         <strong class="text-dark small">{{ $anuncio->telefone }}</strong>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mb-2">
                         <span class="text-secondary small">Horário livre:</span>
                         <strong class="text-dark small">{{ substr($anuncio->horario_inicio, 0, 5) }} às {{ substr($anuncio->horario_fim, 0, 5) }}</strong>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 mt-2 border-top">
+                        <span class="text-secondary small">Dias livres:</span>
+                        <div class="text-end">
+                            @if(count($diasAtivos) === 7)
+                                <strong class="text-dark small">Todos os dias</strong>
+                            @elseif($diasAtivos === ['seg', 'ter', 'qua', 'qui', 'sex'])
+                                <strong class="text-dark small">Segunda a Sexta</strong>
+                            @else
+                                <div class="d-flex flex-wrap gap-1 justify-content-end">
+                                    @foreach($diasAtivos as $dia)
+                                        <span class="badge car-badge car-badge-blue py-1 px-2" style="font-size: 0.72rem;">
+                                            {{ $diasSemana[$dia] ?? ucfirst($dia) }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
 

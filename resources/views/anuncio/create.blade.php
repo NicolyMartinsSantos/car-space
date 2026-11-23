@@ -56,14 +56,84 @@
                 </div>
             </div>
 
+            <div class="mb-4">
+                <label class="car-form-label d-block">
+                    <i class="bi bi-calendar-week text-primary me-1"></i> Dias da Semana Disponíveis
+                </label>
+                <div class="d-flex flex-wrap gap-2 pt-1">
+                    @php
+                        $diasSemana = [
+                            'seg' => 'Segunda-feira',
+                            'ter' => 'Terça-feira',
+                            'qua' => 'Quarta-feira',
+                            'qui' => 'Quinta-feira',
+                            'sex' => 'Sexta-feira',
+                            'sab' => 'Sábado',
+                            'dom' => 'Domingo'
+                        ];
+                        $diasSelecionados = old('dias_disponiveis', []);
+                    @endphp
+
+                    @foreach($diasSemana as $chave => $nome)
+                        <input type="checkbox" 
+                               class="btn-check" 
+                               name="dias_disponiveis[]" 
+                               value="{{ $chave }}" 
+                               id="dia_{{ $chave }}" 
+                               autocomplete="off"
+                               {{ in_array($chave, $diasSelecionados) ? 'checked' : '' }}>
+                        <label class="btn btn-outline-primary rounded-pill px-3 py-2 fw-semibold" for="dia_{{ $chave }}">
+                            {{ $nome }}
+                        </label>
+                    @endforeach
+                </div>
+                <div class="form-text text-muted small mt-1">
+                    <i class="bi bi-info-circle me-1"></i> Selecione os dias em que a vaga estará aberta para receber veículos.
+                </div>
+                @error('dias_disponiveis')
+                    <div class="text-danger small mt-2">
+                        <i class="bi bi-exclamation-circle me-1"></i> {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            @php
+                $horariosPadrao = [];
+                for ($h = 0; $h < 24; $h++) {
+                    foreach ([0, 30] as $m) {
+                        $horariosPadrao[] = sprintf('%02d:%02d', $h, $m);
+                    }
+                }
+            @endphp
+
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
-                    <label class="car-form-label"><i class="bi bi-clock text-primary me-1"></i> Horário Início</label>
-                    <input type="time" name="horario_inicio" class="form-control car-form-control" required>
+                    <label class="car-form-label"><i class="bi bi-clock text-primary me-1"></i> Horário Início (Abertura)</label>
+                    <select name="horario_inicio" class="form-select car-form-select" required>
+                        <option value="">Selecione o horário...</option>
+                        @foreach($horariosPadrao as $h)
+                            <option value="{{ $h }}" {{ old('horario_inicio') == $h ? 'selected' : '' }}>
+                                {{ $h }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('horario_inicio')
+                        <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col-md-6">
-                    <label class="car-form-label"><i class="bi bi-clock-history text-primary me-1"></i> Horário Fim</label>
-                    <input type="time" name="horario_fim" class="form-control car-form-control" required>
+                    <label class="car-form-label"><i class="bi bi-clock-history text-primary me-1"></i> Horário Fim (Fechamento)</label>
+                    <select name="horario_fim" class="form-select car-form-select" required>
+                        <option value="">Selecione o horário...</option>
+                        @foreach($horariosPadrao as $h)
+                            <option value="{{ $h }}" {{ old('horario_fim') == $h ? 'selected' : '' }}>
+                                {{ $h }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('horario_fim')
+                        <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 

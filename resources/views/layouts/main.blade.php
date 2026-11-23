@@ -16,6 +16,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <!-- Flatpickr (Calendário pt-BR) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <style>
         :root {
             --car-blue-50: #f0f9ff;
@@ -37,6 +40,31 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Flatpickr Theme Customization */
+        .flatpickr-calendar {
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--car-border);
+            font-family: inherit;
+        }
+        .flatpickr-day.selected, 
+        .flatpickr-day.startRange, 
+        .flatpickr-day.endRange, 
+        .flatpickr-day.selected:hover, 
+        .flatpickr-day.selected:focus {
+            background: var(--car-blue-600) !important;
+            border-color: var(--car-blue-600) !important;
+        }
+        .flatpickr-day.today {
+            border-color: var(--car-blue-600) !important;
+        }
+        .flatpickr-day.flatpickr-disabled, 
+        .flatpickr-day.flatpickr-disabled:hover {
+            color: #cbd5e1 !important;
+            cursor: not-allowed;
+            background: transparent;
         }
 
         /* Navbar Customizada */
@@ -408,5 +436,9 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Flatpickr JS & Localização pt-BR -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 </body>
 </html>
