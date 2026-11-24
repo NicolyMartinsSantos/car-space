@@ -1,0 +1,1748 @@
+/* ==========================================================================
+   CAR SPACE — Design System Oficial
+   Identidade Visual: Azul-Marinho (#01203D / #000619) + Turquesa (#00C5B1)
+   Apoio: Branco (#FFFFFF) e Cinza-Claro (#F7F9FB)
+   ========================================================================== */
+
+:root {
+    /* Paleta Principal — Azul-Marinho (extraída das logos oficiais) */
+    --cs-navy-950: #000619;
+    --cs-navy-900: #01203d;
+    --cs-navy-800: #0a2e52;
+    --cs-navy-700: #164069;
+    --cs-navy-600: #235482;
+    --cs-navy-100: #e8eff6;
+    --cs-navy-50: #f3f6fa;
+
+    /* Paleta de Destaque — Turquesa (extraída das logos oficiais) */
+    --cs-teal-700: #007d70;
+    --cs-teal-600: #009e8d;
+    --cs-teal-500: #00c5b1;
+    --cs-teal-400: #22d6c3;
+    --cs-teal-100: #dff8f5;
+    --cs-teal-50: #f0fdfb;
+
+    /* Neutros e Superfícies */
+    --cs-white: #ffffff;
+    --cs-bg: #f7f9fb;
+    --cs-surface-subtle: #f1f5f9;
+    --cs-border: #e5eaf0;
+    --cs-border-strong: #cbd5e1;
+
+    /* Tipografia */
+    --cs-text: #0f1e30;
+    --cs-text-secondary: #4b5e73;
+    --cs-text-muted: #718398;
+
+    /* Semânticas */
+    --cs-success-bg: #ecfdf5;
+    --cs-success-text: #047857;
+    --cs-success-border: #a7f3d0;
+
+    --cs-warning-bg: #fffbeb;
+    --cs-warning-text: #b45309;
+    --cs-warning-border: #fde68a;
+
+    --cs-danger-bg: #fef2f2;
+    --cs-danger-text: #b91c1c;
+    --cs-danger-border: #fecaca;
+    --cs-danger-solid: #dc2626;
+    --cs-danger-solid-hover: #b91c1c;
+
+    /* Raios e Sombras */
+    --cs-radius-sm: 10px;
+    --cs-radius-md: 14px;
+    --cs-radius-lg: 20px;
+    --cs-radius-xl: 24px;
+    --cs-radius-pill: 9999px;
+
+    --cs-shadow-xs: 0 1px 2px rgba(1, 32, 61, 0.04);
+    --cs-shadow-sm: 0 2px 8px rgba(1, 32, 61, 0.05), 0 1px 2px rgba(1, 32, 61, 0.03);
+    --cs-shadow-md: 0 8px 24px rgba(1, 32, 61, 0.07), 0 2px 6px rgba(1, 32, 61, 0.04);
+    --cs-shadow-lg: 0 16px 40px rgba(1, 32, 61, 0.10), 0 4px 12px rgba(1, 32, 61, 0.05);
+
+    /* Compatibilidade com variáveis legadas + Bootstrap 5 */
+    --car-blue-50: var(--cs-teal-50);
+    --car-blue-100: var(--cs-teal-100);
+    --car-blue-500: var(--cs-teal-500);
+    --car-blue-600: var(--cs-navy-900);
+    --car-blue-700: var(--cs-navy-800);
+    --car-blue-800: var(--cs-navy-900);
+    --car-dark: var(--cs-navy-900);
+    --car-bg: var(--cs-bg);
+    --car-card-bg: var(--cs-white);
+    --car-border: var(--cs-border);
+
+    --bs-primary: #01203d;
+    --bs-primary-rgb: 1, 32, 61;
+    --bs-link-color: #007d70;
+    --bs-link-hover-color: #01203d;
+    --bs-body-font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --bs-body-color: #0f1e30;
+    --bs-body-bg: #f7f9fb;
+}
+
+/* Base */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--cs-bg);
+    color: var(--cs-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--cs-navy-900);
+    letter-spacing: -0.025em;
+}
+
+.cs-tabular {
+    font-variant-numeric: tabular-nums;
+}
+
+.cs-text-teal {
+    color: var(--cs-teal-600) !important;
+}
+
+.cs-text-teal-dark {
+    color: var(--cs-teal-700) !important;
+}
+
+.cs-text-navy {
+    color: var(--cs-navy-900) !important;
+}
+
+.cs-bg-subtle {
+    background-color: var(--cs-bg) !important;
+}
+
+/* ==========================================================================
+   NAVBAR — Estilo Plataforma Comercial (Airbnb-inspired)
+   ========================================================================== */
+.car-navbar {
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--cs-border);
+    box-shadow: 0 1px 0 rgba(1, 32, 61, 0.03);
+    min-height: 76px;
+    z-index: 1030;
+}
+
+.car-brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 2px 0;
+    transition: opacity 0.2s ease;
+}
+
+.car-brand:hover {
+    opacity: 0.9;
+}
+
+.car-brand-logo {
+    height: 44px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.car-nav-link {
+    font-weight: 600;
+    color: var(--cs-text-secondary);
+    padding: 9px 16px;
+    border-radius: var(--cs-radius-pill);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.92rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    position: relative;
+}
+
+.car-nav-link i {
+    font-size: 1rem;
+    color: var(--cs-text-muted);
+    transition: color 0.2s ease;
+}
+
+.car-nav-link:hover {
+    color: var(--cs-navy-900);
+    background-color: var(--cs-navy-50);
+}
+
+.car-nav-link:hover i {
+    color: var(--cs-teal-600);
+}
+
+.car-nav-link.active {
+    color: var(--cs-navy-900);
+    background-color: var(--cs-teal-100);
+}
+
+.car-nav-link.active i {
+    color: var(--cs-teal-700);
+}
+
+/* Pílula de usuário no cabeçalho */
+.cs-user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px 5px 6px;
+    border-radius: var(--cs-radius-pill);
+    background-color: var(--cs-white);
+    border: 1px solid var(--cs-border);
+    color: var(--cs-navy-900);
+    font-weight: 600;
+    font-size: 0.88rem;
+    box-shadow: var(--cs-shadow-xs);
+    transition: all 0.2s ease;
+}
+
+.cs-user-pill:hover,
+.cs-user-pill:focus,
+.cs-user-pill.show {
+    border-color: var(--cs-border-strong);
+    box-shadow: var(--cs-shadow-sm);
+    background-color: var(--cs-white);
+    color: var(--cs-navy-900);
+}
+
+.cs-user-pill::after {
+    display: none;
+}
+
+.cs-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cs-navy-900) 0%, var(--cs-navy-700) 100%);
+    color: var(--cs-white);
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+}
+
+.cs-avatar-lg {
+    width: 56px;
+    height: 56px;
+    font-size: 1.2rem;
+    box-shadow: 0 6px 16px rgba(1, 32, 61, 0.18);
+}
+
+.cs-dropdown-menu {
+    border: 1px solid var(--cs-border);
+    border-radius: var(--cs-radius-md);
+    box-shadow: var(--cs-shadow-lg);
+    padding: 8px;
+    min-width: 230px;
+    margin-top: 10px !important;
+}
+
+.cs-dropdown-item {
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cs-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.cs-dropdown-item i {
+    color: var(--cs-text-muted);
+    font-size: 1rem;
+}
+
+.cs-dropdown-item:hover,
+.cs-dropdown-item:focus {
+    background-color: var(--cs-navy-50);
+    color: var(--cs-navy-900);
+}
+
+.cs-dropdown-item:hover i {
+    color: var(--cs-teal-600);
+}
+
+.cs-dropdown-item-danger {
+    color: var(--cs-danger-text);
+}
+
+.cs-dropdown-item-danger i {
+    color: var(--cs-danger-text);
+}
+
+.cs-dropdown-item-danger:hover,
+.cs-dropdown-item-danger:focus {
+    background-color: var(--cs-danger-bg);
+    color: var(--cs-danger-text);
+}
+
+.navbar-toggler {
+    border: 1px solid var(--cs-border);
+    border-radius: 10px;
+    padding: 7px 10px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(0, 197, 177, 0.25);
+}
+
+/* ==========================================================================
+   HERO BANNER (Página Inicial)
+   ========================================================================== */
+.hero-section {
+    background:
+        radial-gradient(circle at 88% 18%, rgba(0, 197, 177, 0.22) 0%, rgba(0, 197, 177, 0) 45%),
+        radial-gradient(circle at 12% 85%, rgba(0, 197, 177, 0.12) 0%, rgba(0, 197, 177, 0) 42%),
+        linear-gradient(135deg, var(--cs-navy-900) 0%, var(--cs-navy-950) 100%);
+    color: var(--cs-white);
+    padding: 52px 44px;
+    border-radius: var(--cs-radius-xl);
+    margin-bottom: 40px;
+    box-shadow: var(--cs-shadow-lg);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-section h1,
+.hero-section h2,
+.hero-section h3 {
+    color: var(--cs-white);
+}
+
+.cs-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: var(--cs-radius-pill);
+    background: rgba(0, 197, 177, 0.14);
+    border: 1px solid rgba(0, 197, 177, 0.32);
+    color: var(--cs-teal-400);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+.cs-hero-title {
+    font-size: clamp(1.85rem, 3.2vw, 2.85rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+}
+
+.cs-hero-title span {
+    color: var(--cs-teal-400);
+}
+
+.cs-hero-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    max-width: 580px;
+}
+
+.cs-hero-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.cs-hero-stat-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--cs-radius-md);
+    padding: 18px;
+    backdrop-filter: blur(8px);
+}
+
+.cs-hero-stat-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(0, 197, 177, 0.16);
+    color: var(--cs-teal-400);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+}
+
+.cs-hero-stat-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cs-white);
+    line-height: 1.2;
+}
+
+.cs-hero-stat-label {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.72);
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   PAGE HEADER (Telas Internas)
+   ========================================================================== */
+.cs-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.cs-page-title {
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+    font-weight: 800;
+    color: var(--cs-navy-900);
+    margin-bottom: 4px;
+}
+
+.cs-page-subtitle {
+    color: var(--cs-text-secondary);
+    font-size: 0.94rem;
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   CARDS & ANÚNCIOS (Padrão Airbnb)
+   ========================================================================== */
+.car-card {
+    background: var(--cs-white);
+    border: 1px solid var(--cs-border);
+    border-radius: var(--cs-radius-lg);
+    box-shadow: var(--cs-shadow-sm);
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+    overflow: hidden;
+}
+
+.car-card-interactive:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--cs-shadow-lg);
+    border-color: var(--cs-border-strong);
+}
+
+.car-card-header {
+    background-color: var(--cs-white);
+    border-bottom: 1px solid var(--cs-border);
+    padding: 1.25rem 1.5rem;
+}
+
+.car-card-body {
+    padding: 1.35rem 1.4rem 1.4rem;
+}
+
+/* Espaço reservado elegante para fotografias das vagas (sem inventar fotos) */
+.car-image-placeholder {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(0, 197, 177, 0.16) 0%, rgba(0, 197, 177, 0) 48%),
+        radial-gradient(circle at 15% 90%, rgba(1, 32, 61, 0.08) 0%, rgba(1, 32, 61, 0) 50%),
+        linear-gradient(145deg, #eef4f9 0%, #e4eef6 55%, #edf7f6 100%);
+    border-radius: var(--cs-radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--cs-navy-900);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(1, 32, 61, 0.06);
+}
+
+.car-image-placeholder::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(1, 32, 61, 0.06) 1px, transparent 1px);
+    background-size: 18px 18px;
+    pointer-events: none;
+}
+
+.car-image-placeholder-lg {
+    aspect-ratio: 16 / 8.5;
+    min-height: 240px;
+    max-height: 360px;
+}
+
+.car-image-placeholder-sm {
+    width: 120px;
+    min-width: 120px;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--cs-radius-sm);
+}
+
+.cs-photo-icon-ring {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(1, 32, 61, 0.08);
+    box-shadow: 0 6px 18px rgba(1, 32, 61, 0.07);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cs-navy-900);
+    font-size: 1.65rem;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.cs-photo-icon-ring::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cs-teal-500);
+    top: 8px;
+    right: 8px;
+    box-shadow: 0 0 0 2px #ffffff;
+}
+
+.cs-photo-caption {
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--cs-text-secondary);
+    position: relative;
+    z-index: 1;
+}
+
+.cs-photo-subcaption {
+    font-size: 0.72rem;
+    color: var(--cs-text-muted);
+    position: relative;
+    z-index: 1;
+    margin-top: 2px;
+}
+
+/* Badges sobrepostos na área da fotografia */
+.cs-photo-overlay-top {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    z-index: 2;
+}
+
+.cs-glass-badge {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--cs-navy-900);
+    border: 1px solid rgba(1, 32, 61, 0.08);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 11px;
+    border-radius: var(--cs-radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 8px rgba(1, 32, 61, 0.07);
+}
+
+.cs-glass-badge i {
+    color: var(--cs-teal-600);
+}
+
+.cs-listing-title {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--cs-navy-900);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cs-listing-address {
+    font-size: 0.88rem;
+    color: var(--cs-text-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.45;
+}
+
+.cs-listing-address i {
+    color: var(--cs-teal-600);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.cs-listing-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cs-meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--cs-text-secondary);
+    background: var(--cs-bg);
+    border: 1px solid var(--cs-border);
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.cs-meta-chip i {
+    color: var(--cs-teal-600);
+}
+
+.cs-price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.cs-price-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--cs-navy-900);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+}
+
+.cs-price-lg {
+    font-size: 1.85rem;
+}
+
+.cs-price-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--cs-text-muted);
+}
+
+/* ==========================================================================
+   BADGES PADRONIZADOS
+   ========================================================================== */
+.car-badge {
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 5px 11px;
+    border-radius: var(--cs-radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+}
+
+.car-badge-blue,
+.car-badge-navy {
+    background-color: var(--cs-navy-100);
+    color: var(--cs-navy-900);
+}
+
+.car-badge-teal {
+    background-color: var(--cs-teal-100);
+    color: var(--cs-teal-700);
+}
+
+.car-badge-green {
+    background-color: var(--cs-success-bg);
+    color: var(--cs-success-text);
+    border: 1px solid var(--cs-success-border);
+}
+
+.car-badge-amber {
+    background-color: var(--cs-warning-bg);
+    color: var(--cs-warning-text);
+    border: 1px solid var(--cs-warning-border);
+}
+
+.car-badge-red {
+    background-color: var(--cs-danger-bg);
+    color: var(--cs-danger-text);
+    border: 1px solid var(--cs-danger-border);
+}
+
+.car-badge-gray {
+    background-color: var(--cs-surface-subtle);
+    color: var(--cs-text-secondary);
+    border: 1px solid var(--cs-border);
+}
+
+/* ==========================================================================
+   BOTÕES PADRONIZADOS
+   ========================================================================== */
+.btn-car-primary,
+.btn-car-accent,
+.btn-car-secondary,
+.btn-car-outline-primary,
+.btn-car-danger,
+.btn-car-success-soft,
+.btn-car-danger-soft {
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 10px 20px;
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.btn-car-primary:focus-visible,
+.btn-car-accent:focus-visible,
+.btn-car-secondary:focus-visible,
+.btn-car-outline-primary:focus-visible,
+.btn-car-danger:focus-visible {
+    outline: 2px solid var(--cs-teal-500);
+    outline-offset: 2px;
+}
+
+.btn-car-primary {
+    background-color: var(--cs-navy-900);
+    color: var(--cs-white);
+    border: 1px solid var(--cs-navy-900);
+    box-shadow: 0 2px 6px rgba(1, 32, 61, 0.18);
+}
+
+.btn-car-primary:hover {
+    background-color: var(--cs-navy-800);
+    border-color: var(--cs-navy-800);
+    color: var(--cs-white);
+    box-shadow: 0 6px 16px rgba(1, 32, 61, 0.24);
+    transform: translateY(-1px);
+}
+
+.btn-car-primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-car-accent {
+    background-color: var(--cs-teal-500);
+    color: var(--cs-navy-950);
+    border: 1px solid var(--cs-teal-500);
+    box-shadow: 0 4px 14px rgba(0, 197, 177, 0.28);
+    font-weight: 700;
+}
+
+.btn-car-accent:hover {
+    background-color: var(--cs-teal-400);
+    border-color: var(--cs-teal-400);
+    color: var(--cs-navy-950);
+    box-shadow: 0 8px 20px rgba(0, 197, 177, 0.36);
+    transform: translateY(-1px);
+}
+
+.btn-car-secondary {
+    background-color: var(--cs-white);
+    color: var(--cs-navy-900);
+    border: 1px solid var(--cs-border-strong);
+    box-shadow: var(--cs-shadow-xs);
+}
+
+.btn-car-secondary:hover {
+    background-color: var(--cs-navy-50);
+    color: var(--cs-navy-900);
+    border-color: var(--cs-navy-700);
+}
+
+.btn-car-outline-primary {
+    background-color: transparent;
+    color: var(--cs-navy-900);
+    border: 1px solid var(--cs-navy-900);
+}
+
+.btn-car-outline-primary:hover {
+    background-color: var(--cs-navy-900);
+    color: var(--cs-white);
+}
+
+.btn-car-outline-light {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--cs-white);
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-car-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.45);
+    color: var(--cs-white);
+}
+
+.btn-car-danger {
+    background-color: var(--cs-danger-solid);
+    color: var(--cs-white);
+    border: 1px solid var(--cs-danger-solid);
+}
+
+.btn-car-danger:hover {
+    background-color: var(--cs-danger-solid-hover);
+    border-color: var(--cs-danger-solid-hover);
+    color: var(--cs-white);
+}
+
+.btn-car-success-soft {
+    background-color: var(--cs-success-bg);
+    color: var(--cs-success-text);
+    border: 1px solid var(--cs-success-border);
+    padding: 6px 13px;
+    font-size: 0.82rem;
+    border-radius: 10px;
+}
+
+.btn-car-success-soft:hover {
+    background-color: #059669;
+    border-color: #059669;
+    color: var(--cs-white);
+}
+
+.btn-car-danger-soft {
+    background-color: var(--cs-danger-bg);
+    color: var(--cs-danger-text);
+    border: 1px solid var(--cs-danger-border);
+    padding: 6px 13px;
+    font-size: 0.82rem;
+    border-radius: 10px;
+}
+
+.btn-car-danger-soft:hover {
+    background-color: var(--cs-danger-solid);
+    border-color: var(--cs-danger-solid);
+    color: var(--cs-white);
+}
+
+.btn-car-sm {
+    padding: 7px 14px;
+    font-size: 0.84rem;
+    border-radius: 10px;
+}
+
+.btn-car-lg {
+    padding: 13px 26px;
+    font-size: 0.98rem;
+    border-radius: 14px;
+}
+
+.btn-car-pill {
+    border-radius: var(--cs-radius-pill);
+}
+
+/* ==========================================================================
+   FORMULÁRIOS PADRONIZADOS
+   ========================================================================== */
+.cs-form-section {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cs-border);
+}
+
+.cs-form-section:last-of-type {
+    padding-bottom: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: none;
+}
+
+.cs-form-section-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--cs-teal-700);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.car-form-label {
+    font-weight: 600;
+    color: var(--cs-navy-900);
+    margin-bottom: 7px;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.car-form-label i {
+    color: var(--cs-teal-600);
+}
+
+.car-form-control,
+.car-form-select {
+    border: 1px solid var(--cs-border-strong);
+    border-radius: 12px;
+    padding: 11px 15px;
+    font-size: 0.94rem;
+    color: var(--cs-text);
+    background-color: var(--cs-white);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.car-form-control::placeholder {
+    color: var(--cs-text-muted);
+}
+
+.car-form-control:hover,
+.car-form-select:hover {
+    border-color: #94a3b8;
+}
+
+.car-form-control:focus,
+.car-form-select:focus {
+    border-color: var(--cs-teal-500);
+    box-shadow: 0 0 0 4px rgba(0, 197, 177, 0.16);
+    outline: none;
+}
+
+/* Chips selecionáveis para Dias da Semana (create / edit anúncio) */
+.cs-day-pill-label {
+    border: 1px solid var(--cs-border-strong);
+    background-color: var(--cs-white);
+    color: var(--cs-text-secondary);
+    border-radius: var(--cs-radius-pill);
+    padding: 8px 16px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    user-select: none;
+}
+
+.cs-day-pill-label:hover {
+    border-color: var(--cs-teal-500);
+    color: var(--cs-navy-900);
+    background-color: var(--cs-teal-50);
+}
+
+.btn-check:checked + .cs-day-pill-label {
+    background-color: var(--cs-navy-900);
+    border-color: var(--cs-navy-900);
+    color: var(--cs-white);
+    box-shadow: 0 3px 10px rgba(1, 32, 61, 0.18);
+}
+
+.btn-check:focus-visible + .cs-day-pill-label {
+    outline: 2px solid var(--cs-teal-500);
+    outline-offset: 2px;
+}
+
+/* Chips de visualização dos dias disponíveis */
+.cs-day-chip-active {
+    background-color: var(--cs-teal-100);
+    color: var(--cs-teal-700);
+    border: 1px solid rgba(0, 158, 141, 0.24);
+    border-radius: var(--cs-radius-pill);
+    padding: 6px 13px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cs-day-chip-inactive {
+    background-color: var(--cs-white);
+    color: var(--cs-text-muted);
+    border: 1px solid var(--cs-border);
+    border-radius: var(--cs-radius-pill);
+    padding: 6px 13px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.65;
+    text-decoration: line-through;
+}
+
+/* Checkbox padrão com cor da marca */
+.form-check-input:checked {
+    background-color: var(--cs-navy-900);
+    border-color: var(--cs-navy-900);
+}
+
+.form-check-input:focus {
+    border-color: var(--cs-teal-500);
+    box-shadow: 0 0 0 3px rgba(0, 197, 177, 0.2);
+}
+
+/* ==========================================================================
+   ALERTAS E MENSAGENS PADRONIZADAS
+   ========================================================================== */
+.cs-alert {
+    border-radius: var(--cs-radius-md);
+    padding: 13px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid transparent;
+}
+
+.cs-alert-success {
+    background-color: var(--cs-success-bg);
+    color: var(--cs-success-text);
+    border-color: var(--cs-success-border);
+}
+
+.cs-alert-danger {
+    background-color: var(--cs-danger-bg);
+    color: var(--cs-danger-text);
+    border-color: var(--cs-danger-border);
+}
+
+.cs-alert-warning {
+    background-color: var(--cs-warning-bg);
+    color: var(--cs-warning-text);
+    border-color: var(--cs-warning-border);
+}
+
+.cs-alert-info {
+    background-color: var(--cs-teal-50);
+    color: var(--cs-navy-900);
+    border-color: var(--cs-teal-100);
+}
+
+/* ==========================================================================
+   TABELAS MODERNAS RESPONSIVAS
+   ========================================================================== */
+.car-table-container {
+    background: var(--cs-white);
+    border: 1px solid var(--cs-border);
+    border-radius: var(--cs-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--cs-shadow-sm);
+}
+
+.car-table {
+    margin-bottom: 0;
+    width: 100%;
+    --bs-table-bg: transparent;
+}
+
+.car-table thead th {
+    background-color: var(--cs-bg);
+    color: var(--cs-text-secondary);
+    font-weight: 700;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--cs-border);
+    white-space: nowrap;
+}
+
+.car-table tbody td {
+    padding: 16px 20px;
+    vertical-align: middle;
+    color: var(--cs-text);
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.92rem;
+}
+
+.car-table tbody tr:hover td {
+    background-color: #fafcfe;
+}
+
+.car-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Placa de veículo estilizada */
+.cs-plate {
+    display: inline-flex;
+    align-items: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    color: var(--cs-navy-900);
+    background: var(--cs-white);
+    border: 1.5px solid var(--cs-navy-900);
+    border-top: 4px solid var(--cs-navy-900);
+    border-radius: 6px;
+    padding: 2px 10px;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   EMPTY STATES
+   ========================================================================== */
+.cs-empty-state {
+    background: var(--cs-white);
+    border: 1px dashed var(--cs-border-strong);
+    border-radius: var(--cs-radius-xl);
+    padding: 56px 24px;
+    text-align: center;
+}
+
+.cs-empty-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: var(--cs-teal-100);
+    color: var(--cs-teal-700);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 18px;
+}
+
+/* ==========================================================================
+   FLATPICKR THEME (Azul-Marinho + Turquesa)
+   ========================================================================== */
+.flatpickr-calendar {
+    border-radius: var(--cs-radius-md);
+    box-shadow: var(--cs-shadow-lg);
+    border: 1px solid var(--cs-border);
+    font-family: inherit;
+    padding: 6px;
+}
+
+.flatpickr-months .flatpickr-month {
+    color: var(--cs-navy-900);
+    fill: var(--cs-navy-900);
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected:hover,
+.flatpickr-day.selected:focus {
+    background: var(--cs-navy-900) !important;
+    border-color: var(--cs-navy-900) !important;
+    color: var(--cs-white) !important;
+}
+
+.flatpickr-day.today {
+    border-color: var(--cs-teal-500) !important;
+    color: var(--cs-navy-900);
+    font-weight: 700;
+}
+
+.flatpickr-day:hover {
+    background: var(--cs-teal-100);
+    border-color: var(--cs-teal-100);
+}
+
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover {
+    color: #cbd5e1 !important;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+/* ==========================================================================
+   MODAL ALPINE.JS (Compatível com layouts.main e layouts.app)
+   ========================================================================== */
+.cs-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1080;
+    overflow-y: auto;
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cs-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 6, 25, 0.58);
+    backdrop-filter: blur(4px);
+}
+
+.cs-modal-dialog {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 520px;
+    margin: auto;
+    background: var(--cs-white);
+    border-radius: var(--cs-radius-lg);
+    border: 1px solid var(--cs-border);
+    box-shadow: var(--cs-shadow-lg);
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   TELAS DE AUTENTICAÇÃO (Split Layout Elegante)
+   ========================================================================== */
+.cs-auth-page {
+    min-height: 100vh;
+    background-color: var(--cs-bg);
+    display: grid;
+    grid-template-columns: minmax(360px, 44%) 1fr;
+}
+
+.cs-auth-aside {
+    background-color: var(--cs-navy-950);
+    background-image:
+        radial-gradient(circle at 85% 15%, rgba(0, 197, 177, 0.16) 0%, rgba(0, 197, 177, 0) 48%),
+        radial-gradient(circle at 15% 88%, rgba(0, 197, 177, 0.10) 0%, rgba(0, 197, 177, 0) 45%);
+    color: var(--cs-white);
+    padding: 48px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.cs-auth-logo-dark {
+    max-width: 240px;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+.cs-auth-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cs-auth-feature-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(0, 197, 177, 0.15);
+    color: var(--cs-teal-400);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+.cs-auth-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.cs-auth-card {
+    width: 100%;
+    max-width: 450px;
+    background: var(--cs-white);
+    border: 1px solid var(--cs-border);
+    border-radius: var(--cs-radius-xl);
+    box-shadow: var(--cs-shadow-md);
+    padding: 36px 34px;
+}
+
+/* ==========================================================================
+   RODAPÉ PROFISSIONAL (Azul-Marinho #000619 casando com logo dark)
+   ========================================================================== */
+.cs-footer {
+    margin-top: auto;
+    background-color: var(--cs-navy-950);
+    color: rgba(255, 255, 255, 0.72);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 48px 0 28px;
+}
+
+.cs-footer-logo {
+    height: 64px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.cs-footer-title {
+    color: var(--cs-white);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+}
+
+.cs-footer-link {
+    color: rgba(255, 255, 255, 0.68);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    transition: color 0.18s ease;
+}
+
+.cs-footer-link:hover {
+    color: var(--cs-teal-400);
+}
+
+.cs-footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 32px;
+    padding-top: 20px;
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================================================
+   PAINEL DE SOLICITAÇÕES DO ANUNCIANTE (Meus Anúncios)
+   ========================================================================== */
+.cs-owner-listing-card {
+    background: var(--cs-white);
+    border: 1px solid var(--cs-border);
+    border-radius: var(--cs-radius-lg);
+    box-shadow: var(--cs-shadow-sm);
+    overflow: hidden;
+}
+
+.cs-owner-listing-top {
+    padding: 22px 24px;
+}
+
+.cs-owner-requests-panel {
+    background-color: var(--cs-bg);
+    border-top: 1px solid var(--cs-border);
+    padding: 18px 24px 22px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding: 36px 24px;
+    }
+
+    .cs-hero-highlights {
+        grid-template-columns: 1fr;
+    }
+
+    .cs-auth-page {
+        grid-template-columns: 1fr;
+    }
+
+    .cs-auth-aside {
+        display: none;
+    }
+
+    .car-nav-link {
+        width: 100%;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .car-brand-logo {
+        height: 36px;
+    }
+
+    .cs-auth-card {
+        padding: 28px 22px;
+    }
+
+    .cs-owner-listing-top,
+    .cs-owner-requests-panel {
+        padding: 16px;
+    }
+
+    .car-image-placeholder-sm {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+}
+
+
+/* ==========================================================================
+   FOTOGRAFIAS DOS ANÚNCIOS — Cards, Galeria e Upload com Prévia
+   ========================================================================== */
+.cs-listing-photo-frame {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    border-radius: var(--cs-radius-md);
+    position: relative;
+    overflow: hidden;
+    background-color: #eaf0f6;
+    border: 1px solid rgba(1, 32, 61, 0.06);
+}
+
+.cs-listing-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.car-card-interactive:hover .cs-listing-photo-frame img {
+    transform: scale(1.04);
+}
+
+.cs-listing-photo-thumb {
+    width: 120px;
+    min-width: 120px;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--cs-radius-sm);
+    position: relative;
+    overflow: hidden;
+    background-color: #eaf0f6;
+    border: 1px solid rgba(1, 32, 61, 0.08);
+}
+
+.cs-listing-photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cs-photo-count-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 2;
+    background: rgba(0, 6, 25, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: var(--cs-white);
+    font-size: 0.73rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--cs-radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Galeria interativa na página de detalhes */
+.cs-gallery-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 460px;
+    border-radius: var(--cs-radius-lg);
+    overflow: hidden;
+    background-color: var(--cs-navy-950);
+    border: 1px solid var(--cs-border);
+    box-shadow: var(--cs-shadow-md);
+}
+
+.cs-gallery-stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cs-gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--cs-navy-900);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 6, 25, 0.2);
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.cs-gallery-nav:hover {
+    background: var(--cs-white);
+    transform: translateY(-50%) scale(1.06);
+}
+
+.cs-gallery-nav-prev {
+    left: 14px;
+}
+
+.cs-gallery-nav-next {
+    right: 14px;
+}
+
+.cs-gallery-thumbs {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 12px 2px 4px;
+}
+
+.cs-gallery-thumb {
+    width: 92px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    padding: 0;
+    background: var(--cs-surface-subtle);
+    cursor: pointer;
+    opacity: 0.72;
+    transition: all 0.18s ease;
+}
+
+.cs-gallery-thumb:hover {
+    opacity: 1;
+}
+
+.cs-gallery-thumb.active {
+    border-color: var(--cs-teal-500);
+    opacity: 1;
+    box-shadow: 0 0 0 2px rgba(0, 197, 177, 0.2);
+}
+
+.cs-gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Zona de upload de fotografias */
+.cs-upload-dropzone {
+    border: 2px dashed var(--cs-border-strong);
+    border-radius: var(--cs-radius-md);
+    background-color: var(--cs-bg);
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+}
+
+.cs-upload-dropzone:hover,
+.cs-upload-dropzone.is-dragover {
+    border-color: var(--cs-teal-500);
+    background-color: var(--cs-teal-50);
+    box-shadow: 0 0 0 4px rgba(0, 197, 177, 0.12);
+}
+
+.cs-upload-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--cs-teal-100);
+    color: var(--cs-teal-700);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.cs-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+}
+
+.cs-preview-item,
+.cs-existing-photo-card {
+    background: var(--cs-white);
+    border: 1px solid var(--cs-border);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cs-preview-thumb-box {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    background: var(--cs-surface-subtle);
+    position: relative;
+    overflow: hidden;
+}
+
+.cs-preview-thumb-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cs-preview-remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 6, 25, 0.76);
+    color: var(--cs-white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.15s ease;
+}
+
+.cs-preview-remove-btn:hover {
+    background: var(--cs-danger-solid);
+}
+
+.cs-preview-cover-tag {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: var(--cs-navy-900);
+    color: var(--cs-white);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--cs-radius-pill);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.cs-existing-photo-card.is-marked-delete {
+    border-color: var(--cs-danger-border);
+    background: var(--cs-danger-bg);
+}
+
+.cs-existing-photo-card.is-marked-delete .cs-preview-thumb-box img {
+    filter: grayscale(100%);
+    opacity: 0.35;
+}
+
+.cs-existing-photo-card.is-replaced {
+    border-color: var(--cs-teal-500);
+    box-shadow: 0 0 0 3px rgba(0, 197, 177, 0.16);
+}
+
+.cs-photo-delete-overlay {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px;
+    background: rgba(185, 28, 28, 0.16);
+}
+
+.cs-existing-photo-card.is-marked-delete .cs-photo-delete-overlay {
+    display: flex;
+}
+
+@media (max-width: 575.98px) {
+    .cs-listing-photo-thumb {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+
+    .cs-gallery-stage {
+        aspect-ratio: 4 / 3;
+    }
+}
+
+
+/* ==========================================================================
+   BARRA DE BUSCA POR CIDADE (Página Inicial)
+   ========================================================================== */
+.cs-search-bar {
+    background: var(--cs-white);
+    border: 1px solid var(--cs-border);
+    border-radius: var(--cs-radius-lg);
+    padding: 10px;
+    box-shadow: var(--cs-shadow-md);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cs-search-bar:focus-within {
+    border-color: var(--cs-teal-500);
+    box-shadow: 0 0 0 4px rgba(0, 197, 177, 0.14), var(--cs-shadow-md);
+}
+
+.cs-search-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+.cs-search-input-wrap i {
+    color: var(--cs-teal-600);
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.cs-search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 0.96rem;
+    color: var(--cs-navy-900);
+    padding: 10px 0;
+}
+
+.cs-search-input::placeholder {
+    color: var(--cs-text-muted);
+}

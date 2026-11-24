@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>CAR SPACE - Gestão de Vagas e Reservas</title>
+    <title>Car Space — Compartilhamento e Reserva de Vagas de Garagem</title>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,362 +19,32 @@
     <!-- Flatpickr (Calendário pt-BR) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-    <style>
-        :root {
-            --car-blue-50: #f0f9ff;
-            --car-blue-100: #e0f2fe;
-            --car-blue-500: #0ea5e9;
-            --car-blue-600: #0284c7;
-            --car-blue-700: #0369a1;
-            --car-blue-800: #075985;
-            --car-dark: #0f172a;
-            --car-bg: #f8fafc;
-            --car-card-bg: #ffffff;
-            --car-border: #e2e8f0;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--car-bg);
-            color: #334155;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Flatpickr Theme Customization */
-        .flatpickr-calendar {
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--car-border);
-            font-family: inherit;
-        }
-        .flatpickr-day.selected, 
-        .flatpickr-day.startRange, 
-        .flatpickr-day.endRange, 
-        .flatpickr-day.selected:hover, 
-        .flatpickr-day.selected:focus {
-            background: var(--car-blue-600) !important;
-            border-color: var(--car-blue-600) !important;
-        }
-        .flatpickr-day.today {
-            border-color: var(--car-blue-600) !important;
-        }
-        .flatpickr-day.flatpickr-disabled, 
-        .flatpickr-day.flatpickr-disabled:hover {
-            color: #cbd5e1 !important;
-            cursor: not-allowed;
-            background: transparent;
-        }
-
-        /* Navbar Customizada */
-        .car-navbar {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-        }
-
-        .car-brand {
-            font-weight: 800;
-            font-size: 1.35rem;
-            color: var(--car-blue-700);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .car-brand:hover {
-            color: var(--car-blue-800);
-        }
-
-        .car-nav-link {
-            font-weight: 600;
-            color: #475569;
-            padding: 8px 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .car-nav-link:hover, .car-nav-link.active {
-            color: var(--car-blue-700);
-            background-color: var(--car-blue-50);
-        }
-
-        /* Card System */
-        .car-card {
-            background: #ffffff;
-            border: 1px solid var(--car-border);
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            overflow: hidden;
-        }
-
-        .car-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.08);
-            border-color: #cbd5e1;
-        }
-
-        .car-card-header {
-            background-color: #ffffff;
-            border-bottom: 1px solid #f1f5f9;
-            padding: 1.25rem 1.5rem;
-        }
-
-        .car-card-body {
-            padding: 1.5rem;
-        }
-
-        /* Foto Placeholder Estilizada */
-        .car-image-placeholder {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            border-radius: 12px;
-            height: 180px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--car-blue-700);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .car-image-placeholder i {
-            font-size: 3rem;
-            opacity: 0.85;
-            margin-bottom: 4px;
-        }
-
-        .car-image-placeholder span {
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        /* Badges */
-        .car-badge {
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 6px 12px;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            letter-spacing: 0.3px;
-        }
-
-        .car-badge-blue {
-            background-color: var(--car-blue-100);
-            color: var(--car-blue-800);
-        }
-
-        .car-badge-green {
-            background-color: #dcfce7;
-            color: #166534;
-        }
-
-        .car-badge-amber {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-
-        .car-badge-gray {
-            background-color: #f1f5f9;
-            color: #475569;
-        }
-
-        /* Botões Padronizados */
-        .btn-car-primary {
-            background-color: var(--car-blue-600);
-            color: #ffffff;
-            font-weight: 600;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-car-primary:hover {
-            background-color: var(--car-blue-700);
-            color: #ffffff;
-            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
-        }
-
-        .btn-car-secondary {
-            background-color: #ffffff;
-            color: #475569;
-            border: 1px solid #cbd5e1;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-car-secondary:hover {
-            background-color: #f8fafc;
-            color: #1e293b;
-            border-color: #94a3b8;
-        }
-
-        .btn-car-danger {
-            background-color: #ef4444;
-            color: #ffffff;
-            font-weight: 600;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .btn-car-danger:hover {
-            background-color: #dc2626;
-            color: #ffffff;
-        }
-
-        .btn-car-outline-primary {
-            background-color: transparent;
-            color: var(--car-blue-600);
-            border: 1px solid var(--car-blue-600);
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .btn-car-outline-primary:hover {
-            background-color: var(--car-blue-50);
-            color: var(--car-blue-700);
-        }
-
-        /* Formulários */
-        .car-form-control, .car-form-select {
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 12px 16px;
-            font-size: 0.95rem;
-            color: #1e293b;
-            background-color: #ffffff;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .car-form-control:focus, .car-form-select:focus {
-            border-color: var(--car-blue-500);
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
-            outline: none;
-        }
-
-        .car-form-label {
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-        }
-
-        /* Tabelas */
-        .car-table-container {
-            background: #ffffff;
-            border: 1px solid var(--car-border);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-        }
-
-        .car-table {
-            margin-bottom: 0;
-            width: 100%;
-        }
-
-        .car-table th {
-            background-color: #f8fafc;
-            color: #475569;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 16px 20px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .car-table td {
-            padding: 16px 20px;
-            vertical-align: middle;
-            color: #334155;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .car-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Footer */
-        footer {
-            margin-top: auto;
-            background-color: #ffffff;
-            border-top: 1px solid #e2e8f0;
-            padding: 24px 0;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        .hero-section {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            color: white;
-            padding: 40px 0;
-            border-radius: 20px;
-            margin-bottom: 32px;
-            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.15);
-        }
-    </style>
+    <!-- Design System Car Space & Alpine.js via Vite -->
+    @vite(['resources/css/car-space.css', 'resources/js/app.js'])
 </head>
 <body>
 
     <!-- Navbar Principal -->
-    <nav class="car-navbar navbar navbar-expand-lg py-3 sticky-top">
+    <nav class="car-navbar navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="car-brand" href="/">
-                <i class="bi bi-p-square-fill text-primary fs-3"></i>
-                <span>CAR SPACE</span>
+            <a class="car-brand" href="/" aria-label="Car Space - Página Inicial">
+                <img src="{{ asset('images/logo-carspace-light.png') }}" alt="Car Space" class="car-brand-logo">
             </a>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#carNavbar">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#carNavbar" aria-controls="carNavbar" aria-expanded="false" aria-label="Abrir menu de navegação">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse mt-2 mt-lg-0" id="carNavbar">
-                <ul class="navbar-nav me-auto ms-lg-4 mb-2 mb-lg-0 gap-1">
+            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="carNavbar">
+                <ul class="navbar-nav mx-lg-auto mb-3 mb-lg-0 gap-1">
+                    <li class="nav-item">
+                        <a href="/" class="car-nav-link {{ request()->is('/') ? 'active' : '' }}">
+                            <i class="bi bi-compass"></i> Explorar
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="/anuncio" class="car-nav-link {{ request()->is('anuncio*') ? 'active' : '' }}">
-                            <i class="bi bi-mega-phone"></i> Anúncios
+                            <i class="bi bi-megaphone"></i> Anúncios
                         </a>
                     </li>
                     <li class="nav-item">
@@ -389,30 +59,74 @@
                     </li>
                 </ul>
 
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 pb-2 pb-lg-0">
                     @guest
-                        <a href="/login" class="btn-car-secondary px-3 py-2 text-decoration-none">
+                        <a href="/login" class="btn-car-secondary btn-car-sm btn-car-pill">
                             <i class="bi bi-box-arrow-in-right"></i> Entrar
                         </a>
-                        <a href="/register" class="btn-car-primary px-3 py-2 text-decoration-none">
+                        <a href="/register" class="btn-car-primary btn-car-sm btn-car-pill">
                             <i class="bi bi-person-plus"></i> Criar Conta
                         </a>
                     @endguest
 
                     @auth
-                        <div class="d-flex align-items-center gap-3">
-                            <span class="text-secondary small">
-                                <i class="bi bi-person-circle text-primary me-1"></i> Olá, <strong class="text-dark">{{ Auth::user()->name }}</strong>
-                            </span>
-                            <a href="/profile" class="btn-car-secondary px-3 py-2 text-decoration-none small">
-                                <i class="bi bi-gear"></i> Perfil
-                            </a>
-                            <form action="/logout" method="POST" class="m-0">
-                                @csrf
-                                <button type="submit" class="btn-car-danger px-3 py-2 border-0 small">
-                                    <i class="bi bi-box-arrow-right"></i> Sair
-                                </button>
-                            </form>
+                        @php
+                            $nomePartes = preg_split('/\s+/', trim(Auth::user()->name));
+                            $iniciais = mb_strtoupper(
+                                mb_substr($nomePartes[0] ?? 'U', 0, 1) .
+                                (count($nomePartes) > 1 ? mb_substr(end($nomePartes), 0, 1) : '')
+                            );
+                            $primeiroNome = $nomePartes[0] ?? Auth::user()->name;
+                        @endphp
+
+                        <a href="/anuncio/create" class="btn-car-secondary btn-car-sm btn-car-pill">
+                            <i class="bi bi-plus-circle cs-text-teal"></i> Anunciar Vaga
+                        </a>
+
+                        <div class="dropdown">
+                            <button class="cs-user-pill dropdown-toggle w-100 justify-content-between justify-content-lg-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="d-inline-flex align-items-center gap-2">
+                                    <span class="cs-avatar">{{ $iniciais }}</span>
+                                    <span>{{ $primeiroNome }}</span>
+                                </span>
+                                <i class="bi bi-chevron-down small text-secondary ms-1"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-end cs-dropdown-menu">
+                                <li class="px-3 py-2 border-bottom mb-1">
+                                    <div class="fw-bold small cs-text-navy text-truncate">{{ Auth::user()->name }}</div>
+                                    <div class="text-muted text-truncate" style="font-size: 0.78rem;">{{ Auth::user()->email }}</div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cs-dropdown-item" href="/profile">
+                                        <i class="bi bi-person-gear"></i> Meu Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cs-dropdown-item" href="/anuncio">
+                                        <i class="bi bi-megaphone"></i> Meus Anúncios
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cs-dropdown-item" href="/veiculo">
+                                        <i class="bi bi-car-front"></i> Meus Veículos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cs-dropdown-item" href="/reserva">
+                                        <i class="bi bi-calendar-check"></i> Minhas Reservas
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider my-1"></li>
+                                <li>
+                                    <form action="/logout" method="POST" class="m-0">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item cs-dropdown-item cs-dropdown-item-danger w-100">
+                                            <i class="bi bi-box-arrow-right"></i> Sair da Conta
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
                         </div>
                     @endauth
                 </div>
@@ -421,16 +135,52 @@
     </nav>
 
     <!-- Conteúdo da Página -->
-    <main class="py-4">
+    <main class="py-4 py-md-5 flex-grow-1">
         @yield('content')
     </main>
 
-    <!-- Rodapé -->
-    <footer>
-        <div class="container text-center">
-            <p class="mb-0">
-                <i class="bi bi-p-square-fill me-1 text-primary"></i> <strong>CAR SPACE</strong> &copy; {{ date('Y') }} — Sistema de Gestão e Reserva de Vagas de Garagem.
-            </p>
+    <!-- Rodapé Profissional -->
+    <footer class="cs-footer">
+        <div class="container">
+            <div class="row g-4 align-items-start">
+                <div class="col-12 col-lg-5">
+                    <a href="/" class="d-inline-block mb-3" aria-label="Car Space">
+                        <img src="{{ asset('images/logo-carspace-dark.jpg') }}" alt="Car Space" class="cs-footer-logo">
+                    </a>
+                    <p class="small mb-0" style="max-width: 380px; line-height: 1.65;">
+                        Plataforma inteligente para compartilhar, anunciar e reservar vagas de garagem com segurança, praticidade e transparência.
+                    </p>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="cs-footer-title">Plataforma</div>
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-1">
+                        <li><a href="/" class="cs-footer-link">Explorar garagens</a></li>
+                        <li><a href="/anuncio" class="cs-footer-link">Meus anúncios</a></li>
+                        <li><a href="/veiculo" class="cs-footer-link">Meus veículos</a></li>
+                        <li><a href="/reserva" class="cs-footer-link">Minhas reservas</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-4">
+                    <div class="cs-footer-title">Conta</div>
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-1">
+                        @guest
+                            <li><a href="/login" class="cs-footer-link">Entrar na conta</a></li>
+                            <li><a href="/register" class="cs-footer-link">Criar nova conta</a></li>
+                        @endguest
+                        @auth
+                            <li><a href="/profile" class="cs-footer-link">Configurações do perfil</a></li>
+                            <li><a href="/anuncio/create" class="cs-footer-link">Anunciar nova vaga</a></li>
+                        @endauth
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cs-footer-bottom d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+                <span>&copy; {{ date('Y') }} Car Space. Todos os direitos reservados.</span>
+                <span>Gestão e Reserva de Vagas de Garagem</span>
+            </div>
         </div>
     </footer>
 

@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VeiculoController;
@@ -17,15 +19,32 @@ Route::get('/buscar-cep', [CepController::class, 'buscar']);
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
+    $cidadeBusca = trim((string) $request->query('cidade', ''));
+
+    $query = Anuncio::with('fotos');
 
     if (auth()->check()) {
-        $data = Anuncio::where('user_id', '!=', auth()->id())->get();
-    } else {
-        $data = Anuncio::all();
+        $query->where('user_id', '!=', auth()->id());
     }
 
-    return view('welcome', compact('data'));
+    if ($cidadeBusca !== '') {
+        $termoNormalizado = Str::ascii(mb_strtolower($cidadeBusca));
+
+        $data = $query
+            ->whereNotNull('cidade')
+            ->get()
+            ->filter(function (Anuncio $anuncio) use ($termoNormalizado) {
+                $cidadeAnuncio = Str::ascii(mb_strtolower(trim((string) $anuncio->cidade)));
+
+                return $cidadeAnuncio !== '' && str_contains($cidadeAnuncio, $termoNormalizado);
+            })
+            ->values();
+    } else {
+        $data = $query->get();
+    }
+
+    return view('welcome', compact('data', 'cidadeBusca'));
 
 });
 

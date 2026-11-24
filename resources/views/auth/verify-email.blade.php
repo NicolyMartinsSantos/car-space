@@ -1,30 +1,33 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    <div class="mb-4">
+        <span class="car-badge car-badge-teal mb-2">
+            <i class="bi bi-envelope-check-fill"></i> Verificação de e-mail
+        </span>
+        <h1 class="h3 fw-bold mb-1">Verifique seu e-mail</h1>
+        <p class="text-secondary small mb-0">
+            Obrigado por se cadastrar! Antes de começar, confirme seu endereço de e-mail clicando no link enviado para você. Caso não tenha recebido, podemos enviar outro.
+        </p>
     </div>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+        <div class="cs-alert cs-alert-success mb-4" role="status">
+            <i class="bi bi-check-circle-fill flex-shrink-0"></i>
+            <span>Um novo link de verificação foi enviado para o endereço de e-mail cadastrado.</span>
         </div>
     @endif
 
-    <div class="mt-4 flex items-center justify-between">
+    <div class="d-flex flex-column gap-3">
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
-
-            <div>
-                <x-primary-button>
-                    {{ __('Resend Verification Email') }}
-                </x-primary-button>
-            </div>
+            <button type="submit" class="btn-car-primary btn-car-lg w-100">
+                <i class="bi bi-send"></i> Reenviar E-mail de Verificação
+            </button>
         </form>
 
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('logout') }}" class="text-center">
             @csrf
-
-            <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {{ __('Log Out') }}
+            <button type="submit" class="btn btn-link text-secondary small text-decoration-none fw-semibold">
+                <i class="bi bi-box-arrow-right me-1"></i> Sair da conta
             </button>
         </form>
     </div>

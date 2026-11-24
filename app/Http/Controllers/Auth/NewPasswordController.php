@@ -31,20 +31,37 @@ class NewPasswordController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        $request->merge([
+            'email' => trim((string) $request->input('email')),
         ]);
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
+        $request->validate([
+            'token'    => ['required'],
+            'email'    => ['required', 'email'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'token.required'     => 'Token de redefinição inválido ou ausente.',
+            'email.required'     => 'Informe o seu endereço de e-mail.',
+            'email.email'        => 'Informe um endereço de e-mail válido.',
+            'password.required'  => 'Informe a nova senha.',
+            'password.confirmed' => 'A confirmação da nova senha não confere.',
+            'password.min'       => 'A nova senha deve ter pelo menos :min caracteres.',
+        ]);
+
+        $emailNormalizado = mb_strtolower($request->input('email'));
+        $usuario = User::whereRaw('LOWER(TRIM(email)) = ?', [$emailNormalizado])->first();
+        $emailParaBroker = $usuario ? $usuario->email : $request->input('email');
+
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
+            [
+                'email'                 => $emailParaBroker,
+                'password'              => $request->input('password'),
+                'password_confirmation' => $request->input('password_confirmation'),
+                'token'                 => $request->input('token'),
+            ],
             function (User $user) use ($request) {
                 $user->forceFill([
-                    'password' => Hash::make($request->password),
+                    'password'       => Hash::make($request->password),
                     'remember_token' => Str::random(60),
                 ])->save();
 
@@ -52,12 +69,20 @@ class NewPasswordController extends Controller
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
-        return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+        if ($status === Password::PASSWORD_RESET) {
+            return redirect()
+                ->route('login')
+                ->with('status', 'Sua senha foi redefinida com sucesso! Agora você já pode entrar com a nova senha.');
+        }
+
+        $mensagemErro = match ($status) {
+            Password::INVALID_TOKEN => 'Este link de redefinição de senha é inválido ou já expirou. Solicite um novo link.',
+            Password::INVALID_USER  => 'Não encontramos nenhum usuário cadastrado com este endereço de e-mail.',
+            default                 => __($status),
+        };
+
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => $mensagemErro]);
     }
 }
